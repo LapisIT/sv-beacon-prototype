@@ -1,6 +1,10 @@
 # Logs
 logs
 *.log
+<<<<<<< HEAD
+=======
+npm-debug.log*
+>>>>>>> 9770c32060e77c6976d0114a0f5eb399ae4893cc
 
 # Runtime data
 pids
@@ -23,6 +27,7 @@ coverage
 build/Release
 
 # Dependency directory
+<<<<<<< HEAD
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
 
@@ -48,3 +53,12 @@ www/data.tar.gz
 resources/android
 resources/ios
 
+=======
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+>>>>>>> 9770c32060e77c6976d0114a0f5eb399ae4893cc
