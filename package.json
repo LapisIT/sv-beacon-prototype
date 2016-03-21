@@ -14,6 +14,18 @@
     "gulp-util": "^2.2.14",
     "shelljs": "^0.3.0"
   },
+  "scripts": {
+    "prepare-ionic-build": "npm install && bower install && gulp sass",
+    "start": "ionic serve -a -c",
+    "sass": "gulp sass",
+    "update-version": "node update-version && git add config.xml && git commit -m 'patch version'",
+    "commit": "git add . && git commit -m 'patch version'",
+    "uv": "npm run commit && npm version patch && node update-version.js && npm run commit",
+    "build-web": "grunt ",
+    "bad": "ionic run android --device",
+    "badl": "ionic run android --device --livereload",
+    "rsc": "ionic resources"
+  },
   "cordovaPlugins": [
     "cordova-plugin-device",
     "cordova-plugin-console",
