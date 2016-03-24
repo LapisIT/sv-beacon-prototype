@@ -3,23 +3,45 @@
     <h1 class="title">Please enter your details</h1>
   </ion-header-bar>
   <ion-content>
-    <form ng-submit="doLogin(myDetails)">
+    <form role="form" name="form"
+          autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+          novalidate>
+      <p class="hint-text" style="margin-top: 10px;">
+        <i class="icon ion-android-bulb"></i>
+        <text>
+          This information will be used to improve application usability based on your usage.
+        </text>
+      </p>
       <div class="list">
-        <label class="item item-input item-floating-label">
-          <span class="input-label">First Name</span>
-          <input type="text" placeholder="First Name" ng-model="myDetails.firstName">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Name</span>
+          <input id="name" name="name" type="text" placeholder="Please enter your name"
+                 ng-model="myDetails.name" required>
+          <notification message="msgNameRequired"
+                        show="showError" invalid="form.name.$error.required" icon="danger"></notification>
         </label>
-        <label class="item item-input item-floating-label">
-          <span class="input-label">Last Name</span>
-          <input type="text" placeholder="Last Name" ng-model="myDetails.lastName">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Mobile</span>
+          <input name="mobile" type="tel" placeholder="Please enter your mobile number" ng-model="myDetails.mobile"
+                 ng-pattern="patterns.phone" required>
+          <notification message="msgPhoneRequired"
+                        show="showError" invalid="form.mobile.$error.required"></notification>
+          <notification message="msgPhonePhone"
+                        show="showError" invalid="form.mobile.$error.pattern"></notification>
         </label>
-        <label class="item item-input item-floating-label">
+        <label class="item item-input item-stacked-label">
           <span class="input-label">Email</span>
-          <input type="email" placeholder="Email" ng-model="myDetails.email">
+          <input id="email" name="email" type="email" placeholder="Please enter your email address" ng-model="myDetails.email"
+                 ng-pattern="patterns.email" required>
+          <notification message="msgEmailRequired"
+                        show="showError" invalid="form.email.$error.required" icon="danger"></notification>
+          <notification message="msgEmailPattern"
+                        show="showError" invalid="form.email.$error.pattern" icon="danger"></notification>
         </label>
       </div>
-      <button type="submit" class="button button-full button-positive">
-        Save my details
+      <button class="button button-positive button-full" style="margin-top: 0;"
+              ng-click="doLogin(myDetails, form)">
+        <span>Save</span>
       </button>
     </form>
   </ion-content>
