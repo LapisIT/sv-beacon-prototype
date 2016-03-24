@@ -1,0 +1,4 @@
+<div ng-model="message"
+    class="message-section bg-{{message.type}} text-{{message.type}} btm1 ng-hide"
+    ng-show="showMsg()">
+  <i class="icon {{icon(message.type)}}"></i> <span>{{message.text}}</span></div>

@@ -1,0 +1,26 @@
+<ion-view>
+  <ion-header-bar>
+    <h1 class="title">Please enter your details</h1>
+  </ion-header-bar>
+  <ion-content>
+    <form ng-submit="doLogin(myDetails)">
+      <div class="list">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">First Name</span>
+          <input type="text" placeholder="First Name" ng-model="myDetails.firstName">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Last Name</span>
+          <input type="text" placeholder="Last Name" ng-model="myDetails.lastName">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Email</span>
+          <input type="email" placeholder="Email" ng-model="myDetails.email">
+        </label>
+      </div>
+      <button type="submit" class="button button-full button-positive">
+        Save my details
+      </button>
+    </form>
+  </ion-content>
+</ion-view>

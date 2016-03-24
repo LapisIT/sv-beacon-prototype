@@ -1,0 +1,54 @@
+<ion-side-menus enable-menu-with-back-views="true" expose-aside-when="large">
+    <ion-side-menu-content>
+        <ion-nav-bar class="bar-positive">
+            <ion-nav-back-button class="button-icon" style="width: 60px; height: 32px;text-align: left;font-size: 2em;">
+                <i class="ion-chevron-left">.</i>
+            </ion-nav-back-button>
+            <ion-nav-buttons side="right">
+                <button class="button-icon home-button" style="margin-top: -5px;;font-size: 2em; color: #fff"
+                        ng-click="go('app.home')">
+                    <i class="ion-home"></i>
+                </button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="menuContent"></ion-nav-view>
+    </ion-side-menu-content>
+
+    <ion-side-menu side="left">
+        <ion-content>
+            <div class="my-details" ng-if="myDetails">
+                <p class="my-details">{{myDetails.name}}</p>
+                <p class="my-details">{{myDetails.email}}</p>
+            </div>
+            <ion-list>
+                <ion-item menu-close href="#/app/home">
+                    <i class="icon icomoon home"></i>
+                    Home
+                </ion-item>
+                <ion-item menu-close href="" ng-click="go('app.my-details')">
+                    <i class="icon my-details"></i>
+                    My Details
+                </ion-item>
+                <ion-item menu-close href="" ng-click="goToMap()">
+                    <i class="icon icomoon map"></i>
+                    Map
+                </ion-item>
+
+                <ion-item ng-if="isDebugMode" menu-close href="" ng-click="go('app.clear-cache')">
+                    Clear cache
+                </ion-item>
+                <ion-item menu-close href="" ng-click="go('app.validate-species')"
+                          ng-if="isWebUat && isDebugMode">
+                    Validate Species Data
+                </ion-item>
+                <ion-item ng-if="isDebugMode" menu-close href="" ng-click="showLogs()">
+                    Show logs
+                </ion-item>
+
+                <div menu-close href="" style="color: #fff; padding:10px;">
+                    Version: {{appVersion}}
+                </div>
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>

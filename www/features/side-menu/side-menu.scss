@@ -1,0 +1,165 @@
+.menu {
+  .icomoon:before {
+    font-size: 3em;
+    position: absolute;
+    left: 0;
+  }
+
+  .icon.species:before {
+    content: $species-icon;
+    font-size: 2.2em;
+    left: 5px;
+  }
+
+  .icon.frog:before {
+    content: $frog-icon;
+    left: 6px;
+    font-size: 2em;
+  }
+
+  ion-item.frog a.item-content {
+    background-color: $frog-color;
+  }
+
+  ion-item.frog, ion-item.waterbird, ion-item.fish, ion-item.mammal {
+    border: none;
+  }
+
+  .icon.waterbird:before {
+    content: $waterbird-icon;
+    left: 5px;
+    font-size: 2em;
+  }
+
+  ion-item.waterbird a.item-content {
+    background-color: $waterbird-color;
+  }
+
+  .icon.fish:before {
+    content: $fish-icon;
+    left: 5px;
+    font-size: 2em;
+  }
+
+  ion-item.fish a.item-content {
+    background-color: $fish-color;
+  }
+
+  .icon.mammal:before {
+    content: $mammal-icon;
+    left: 5px;
+    font-size: 2em;
+  }
+
+  ion-item.mammal a.item-content {
+    background-color: $mammal-color;
+  }
+
+  .icon.map:before {
+    content: $map-icon;
+  }
+
+  .icon.home:before {
+    content: $home-icon;
+  }
+
+  .icon.reports:before {
+    content: $report-icon;
+  }
+
+  .icon.info:before {
+    content: $info-icon;
+  }
+
+  .icon:not(.icomoon):before {
+    display: inline-block;
+    font-family: "Ionicons";
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    text-rendering: auto;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1.8em;
+    position: absolute;
+    top: 10px;
+    left: 11px;
+  }
+
+  .icon.my-details:before {
+    content: $my-details-icon;
+  }
+
+  ion-item.species > a {
+    height: 256px;
+    &:before {
+      content: '';
+      border-left: solid 1px #EEEEEE;
+      height: 193px;
+      display: block;
+      position: absolute;
+      left: 20px;
+      top: 39px;
+      width: 1px;
+      z-index: 2;
+    }
+  }
+
+  ion-item {
+    border-color: lighten($side-menu-item-bg, 5%);
+    //font-size: 14px;
+    a.item-content {
+      background-color: $side-menu-item-bg;
+      color: #fff;
+      border-bottom: solid 1px #192432;
+      padding-left: 50px;
+      padding-right: 50px;
+
+    }
+    a.item-content.activated {
+      background-color: #293d52;
+      border-bottom: solid 1px #192432;
+    }
+    ul {
+      background-color: #4F6988;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 53px;
+      li a {
+        color: #fff;
+        border-bottom: solid 1px #192432;
+        padding: 15px 49px;
+        position: relative;
+        display: block;
+        text-decoration: none;
+      }
+      li a:before {
+        content: '';
+        border-bottom: solid 1px #EEEEEE;
+        width: 25px;
+        display: block;
+        position: absolute;
+        left: 20px;
+        top: 25px;
+      }
+    }
+  }
+  p.my-details {
+    color: #fff;
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+  div.my-details {
+    background-color: $side-menu-bg;
+    padding: 12px 10px;
+  }
+}
+
+@media (min-width: 767px) {
+  .button.button-icon.button-clear.ion-navicon, .home-button {
+    display: none;
+  }
+}

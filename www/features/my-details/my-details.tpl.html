@@ -1,0 +1,46 @@
+<ion-view view-title="My Details">
+    <ion-content>
+        <form role="form" name="form"
+              autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+              novalidate>
+            <p class="hint-text" style="margin-top: 10px;">
+                <i class="icon ion-android-bulb"></i>
+                <text>
+                    This information will be used each time you make a report.
+                    <br/>To update your details, you can come back to this screen at anytime.
+                </text>
+            </p>
+            <div class="list">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Name</span>
+                    <input id="name" name="name" type="text" placeholder="Please enter your name"
+                           ng-model="myDetails.name" required>
+                    <notification message="msgNameRequired"
+                                  show="showError" invalid="form.name.$error.required" icon="danger"></notification>
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Mobile</span>
+                    <input name="mobile" type="tel" placeholder="Please enter your mobile number" ng-model="myDetails.mobile"
+                           ng-pattern="patterns.phone" required>
+                    <notification message="msgPhoneRequired"
+                                  show="showError" invalid="form.mobile.$error.required"></notification>
+                    <notification message="msgPhonePhone"
+                                  show="showError" invalid="form.mobile.$error.pattern"></notification>
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Email</span>
+                    <input id="email" name="email" type="email" placeholder="Please enter your email address" ng-model="myDetails.email"
+                           ng-pattern="patterns.email" required>
+                    <notification message="msgEmailRequired"
+                                  show="showError" invalid="form.email.$error.required" icon="danger"></notification>
+                    <notification message="msgEmailPattern"
+                                  show="showError" invalid="form.email.$error.pattern" icon="danger"></notification>
+                </label>
+            </div>
+            <button class="button button-positive button-full" style="margin-top: 0;"
+                    ng-click="save(myDetails, form)">
+                <span>Save</span>
+            </button>
+        </form>
+    </ion-content>
+</ion-view>

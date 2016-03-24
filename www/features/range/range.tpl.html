@@ -1,0 +1,41 @@
+<ion-view>
+  <ion-header-bar>
+    <h1 class="title">Login</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeLogin()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <!--<button class="button button-full button-positive" ng-click="isBluetoothEnabled()">-->
+    <!--Is Bluetooth Enabled?-->
+    <!--</button>-->
+    <!--<button class="button button-full button-positive" ng-click="requestAlwaysAuthorization()">-->
+    <!--requestAlwaysAuthorization-->
+    <!--</button>-->
+    <button ng-if="rangedBeacons.length === 0" class="button button-full button-positive" ng-click="startRangingBeaconsInRegion()">
+      Range Beacons
+    </button>
+    <!--<button class="button button-full button-positive" ng-click="startMonitoringForRegion()">-->
+    <!--startMonitoringForRegion-->
+    <!--</button>-->
+    <button ng-if="rangedBeacons.length > 0" class="button button-full button-assertive" ng-click="stopRangingBeaconsInRegion()">
+      Stop Ranging
+    </button>
+    <!--<button class="button button-full button-positive" ng-click="stopMonitoringForRegion()">-->
+    <!--stopMonitoringForRegion-->
+    <!--</button>-->
+    <beacons ng-if="rangedBeacons.length > 0" class="padding" style="display: block;">
+      <h4>Ranged Beacons</h4>
+      <div class="card" ng-repeat="beacon in rangedBeacons | orderBy:'accuracy'">
+        <div class="item item-divider" style="background-color: {{names[beacon.major].color}}; color: #fff">
+          {{names[beacon.major].name}}
+        </div>
+        <div class="item item-text-wrap">
+          <p>UUID: {{beacon.uuid}}:{{beacon.major}}:{{beacon.minor}}</p>
+          <p>Proximity: {{beacon.proximity}} ({{beacon.accuracy}})</p>
+        </div>
+      </div>
+    </beacons>
+
+  </ion-content>
+</ion-view>

@@ -27,12 +27,26 @@
     "rsc": "ionic resources"
   },
   "cordovaPlugins": [
-    "cordova-plugin-device",
-    "cordova-plugin-console",
-    "cordova-plugin-whitelist",
-    "cordova-plugin-splashscreen",
-    "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard"
+    "cordova-plugin-device@1.1.1",
+    "cordova-plugin-console@1.0.2",
+    "cordova-plugin-crosswalk-webview@1.5.0",
+    "cordova-sqlite-storage@0.8.2",
+    "cordova-plugin-geolocation@2.1.0",
+    "cordova-plugin-splashscreen@3.2.0",
+    "cordova-plugin-statusbar@2.1.1",
+    "cordova-plugin-transport-security@0.1.1",
+    "cordova-plugin-whitelist@1.2.1",
+    "ionic-plugin-keyboard@1.0.8",
+    "cordova-plugin-app-version@0.1.8",
+    "cordova-plugin-network-information@1.2.0",
+    "cordova-plugin-screen-orientation@1.4.1",
+    "cordova-plugin-ibeacon@3.4.0"
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [
+    {
+      "platform": "ios",
+      "version": "4.0.1",
+      "locator": "ios@4.0.1"
+    }
+  ]
 }
