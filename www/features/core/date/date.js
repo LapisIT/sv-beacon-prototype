@@ -5,7 +5,7 @@
 
 'use strict';
 
-angular.module('speciesReporting.date', [])
+angular.module('svBeaconPrototype.date', [])
 	.factory('DateUtil',
 		function ($filter) {
 

@@ -1,4 +1,4 @@
-angular.module('speciesReporting.apis', ['ngStorage'])
+angular.module('svBeaconPrototype.apis', ['ngStorage'])
   .factory('SpeciesReportingApis',
   function ($http, $q, $log,$localStorage,
             Validations) {

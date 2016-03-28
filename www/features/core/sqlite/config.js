@@ -5,9 +5,9 @@
 
 'use strict';
 
-angular.module('speciesReporting.sqlite')
+angular.module('svBeaconPrototype.sqlite')
 	.constant('Config', {
-		name: 'speciesReporting',
+		name: 'svBeaconPrototype',
 		tables: [
 			{
 				name: 'version',

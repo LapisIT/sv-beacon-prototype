@@ -4,7 +4,7 @@
  */
 
 
-angular.module('speciesReporting.network', [])
+angular.module('svBeaconPrototype.network', [])
 	.factory('Network',
 		function ($window, $log, $http, $q, $cordovaNetwork, $rootScope) {
 			'use strict';

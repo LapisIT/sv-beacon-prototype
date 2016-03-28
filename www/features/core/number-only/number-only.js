@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('speciesReporting')
+angular.module('svBeaconPrototype')
   .directive('numberOnly', function ($log, $parse) {
     return {
       require: 'ngModel',

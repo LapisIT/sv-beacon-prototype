@@ -3,7 +3,7 @@
  * validations class
  * @module validations
  */
-angular.module('speciesReporting.validations', [])
+angular.module('svBeaconPrototype.validations', [])
   .factory('Validations',
     function ($log, Messages) {
 

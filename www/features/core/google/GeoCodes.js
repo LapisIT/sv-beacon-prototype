@@ -3,7 +3,7 @@
  * https://developers.google.com/maps/documentation/javascript/geocoding
  * */
 
-angular.module('speciesReporting.googleGeocode',[])
+angular.module('svBeaconPrototype.googleGeocode',[])
   .service('GeoCodes', function GeoCodes($log, $q, mapDefaults) {
     var GeoCodes = {},
     geocoder = new google.maps.Geocoder(),

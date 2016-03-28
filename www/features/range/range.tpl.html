@@ -1,10 +1,4 @@
 <ion-view>
-  <ion-header-bar>
-    <h1 class="title">Login</h1>
-    <div class="buttons">
-      <button class="button button-clear" ng-click="closeLogin()">Close</button>
-    </div>
-  </ion-header-bar>
   <ion-content>
     <!--<button class="button button-full button-positive" ng-click="isBluetoothEnabled()">-->
     <!--Is Bluetooth Enabled?-->
@@ -12,6 +6,13 @@
     <!--<button class="button button-full button-positive" ng-click="requestAlwaysAuthorization()">-->
     <!--requestAlwaysAuthorization-->
     <!--</button>-->
+    <p class="hint-text">
+      <i class="icon ion-android-bulb"></i>
+      <text>
+        Tap "Range Beacons" to locate all the beacons.
+        You will see a list of beacons sorted based on their distance from your device.
+      </text>
+    </p>
     <button ng-if="rangedBeacons.length === 0" class="button button-full button-positive" ng-click="startRangingBeaconsInRegion()">
       Range Beacons
     </button>

@@ -10,7 +10,7 @@ describe('cache factory', function() {
 	// instantiate service
 	var cache, $log;
 
-	beforeEach(module('speciesReporting', function($provide) {
+	beforeEach(module('svBeaconPrototype', function($provide) {
 		$provide.value('$log', console)
 	}));
 

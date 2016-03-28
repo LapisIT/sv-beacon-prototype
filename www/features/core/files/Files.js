@@ -1,4 +1,4 @@
-angular.module('speciesReporting.files', [])
+angular.module('svBeaconPrototype.files', [])
 	.factory('Files',
 		function ($http, $q, $log, $cordovaFile,
 		          Validations) {

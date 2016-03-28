@@ -5,7 +5,7 @@
 
 'use strict';
 
-angular.module('speciesReporting.sqlite', [])
+angular.module('svBeaconPrototype.sqlite', [])
 	// DB wrapper
 	.factory('Sqlite', function ($q, $log, $window, Config) {
 

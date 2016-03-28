@@ -5,7 +5,7 @@
 
 'use strict';
 
-angular.module('speciesReporting.audio', []).factory('SpeciesReportingAudio', function ($q, $log, $window, $cordovaMedia, $interval, $cordovaNativeAudio, $timeout, Validations, Network) {
+angular.module('svBeaconPrototype.audio', []).factory('SpeciesReportingAudio', function ($q, $log, $window, $cordovaMedia, $interval, $cordovaNativeAudio, $timeout, Validations, Network) {
 	var isDefined = Validations.isDefined, isEmpty = Validations.isEmpty;
 	$log.info('Audio init ... ');
 

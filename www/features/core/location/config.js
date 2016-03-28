@@ -1,4 +1,4 @@
-angular.module('speciesReporting.location')
+angular.module('svBeaconPrototype.location')
   .constant('MapDefaults', (function () {
     var auBounds = {
       northEast: {

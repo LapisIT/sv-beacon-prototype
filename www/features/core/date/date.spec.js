@@ -10,7 +10,7 @@ describe('date', function () {
 	// instantiate service
 	var $log, date;
 
-	beforeEach(module('speciesReporting', function ($provide) {
+	beforeEach(module('svBeaconPrototype', function ($provide) {
 		$provide.value('$log', console)
 	}));
 

@@ -1,4 +1,4 @@
-angular.module('speciesReporting.photo', [])
+angular.module('svBeaconPrototype.photo', [])
 	.factory('Photo', function ($document, $q, $localStorage) {
 		'use strict';
 

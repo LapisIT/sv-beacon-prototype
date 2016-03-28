@@ -5,7 +5,7 @@
 
 'use strict';
 
-angular.module('speciesReporting.cache', []).factory('Cache', function ($q, $log, Sqlite, DateUtil) {
+angular.module('svBeaconPrototype.cache', []).factory('Cache', function ($q, $log, Sqlite, DateUtil) {
 
 	$log.info('Cache init ... ');
 

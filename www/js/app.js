@@ -4,9 +4,26 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('svBeaconPrototype', ['ionic', 'ngCordova', 'ngStorage'])
+angular.module('svBeaconPrototype', [
+    'ionic',
+    'ngCordova',
+    'ngStorage',
+    'svBeaconPrototype.validations',
+    'svBeaconPrototype.router',
+    'svBeaconPrototype.messages',
+    'svBeaconPrototype.offline',
+    'svBeaconPrototype.network',
+    'svBeaconPrototype.audio',
+    'svBeaconPrototype.date',
+    'svBeaconPrototype.photo',
+    'svBeaconPrototype.messages',
+    'svBeaconPrototype.googleGeocode',
+    'svBeaconPrototype.validations',
+    'svBeaconPrototype.location',
+    'svBeaconPrototype.googleAnalytics'
+  ])
 
-  .run(function ($ionicPlatform) {
+  .run(function ($ionicPlatform, $rootScope, Router) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -25,6 +42,8 @@ angular.module('svBeaconPrototype', ['ionic', 'ngCordova', 'ngStorage'])
       }
 
     });
+
+    	Router.init($rootScope);
   })
 
   .config(function ($stateProvider, $urlRouterProvider) {
@@ -37,12 +56,22 @@ angular.module('svBeaconPrototype', ['ionic', 'ngCordova', 'ngStorage'])
         controller: 'SideMenuCtrl'
       })
 
-      .state('app.notification', {
-        url: '/notification',
+      .state('app.home', {
+        url: '/home',
+        views: {
+          'menuContent': {
+            templateUrl: 'features/home/home.tpl.html',
+            controller: 'HomeCtrl'
+          }
+        }
+      })
+
+      .state('app.range', {
+        url: '/range',
         views: {
           'menuContent': {
             templateUrl: 'features/range/range.tpl.html',
-            controller: 'NotificationCtrl'
+            controller: 'RangeCtrl'
           }
         }
       })
@@ -57,7 +86,7 @@ angular.module('svBeaconPrototype', ['ionic', 'ngCordova', 'ngStorage'])
         }
       })
 
-      .state('app.myDetails', {
+      .state('app.my-details', {
         url: '/my-details',
         views: {
           'menuContent': {
@@ -68,6 +97,6 @@ angular.module('svBeaconPrototype', ['ionic', 'ngCordova', 'ngStorage'])
       });
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/notification');
+    $urlRouterProvider.otherwise('/app/home');
 
   });

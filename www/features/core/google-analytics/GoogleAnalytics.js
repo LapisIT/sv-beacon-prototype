@@ -16,7 +16,7 @@
  *
  * @module GoogleAnalytics
  */
-angular.module('speciesReporting.googleAnalytics', [])
+angular.module('svBeaconPrototype.googleAnalytics', [])
   .factory('GoogleAnalytics',
   function ($log, $rootScope, $location, $localStorage, $q, $timeout, Offline, Validations) {
     var GoogleAnalytics = {},isDefined = Validations.isDefined,

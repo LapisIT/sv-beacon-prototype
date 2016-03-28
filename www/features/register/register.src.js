@@ -26,7 +26,7 @@ angular.module('svBeaconPrototype')
       if ($scope.showError) {
         return;
       }
-      $rootScope.go('app.home');
+      $scope.modal.hide();
     };
 
   });

@@ -4,13 +4,14 @@
  */
 angular.module('svBeaconPrototype')
 
-  .controller('NotificationCtrl', function ($scope, $rootScope, $ionicModal, $ionicPopup, $timeout, $log, $ionicPlatform, $cordovaBeacon, $q) {
+  .controller('RangeCtrl', function ($scope, $rootScope, $ionicModal, $ionicPopup, $timeout, $log, $ionicPlatform, $cordovaBeacon, $q, MyDetails, Validations) {
 
     var brIdentifier = 'estimote',
       brUuid = 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
       brMajor = null,
       brMinor = null,
-      brNotifyEntryStateOnDisplay = true;
+      brNotifyEntryStateOnDisplay = true,
+      isEmpty = Validations.isEmpty;
 
     // Form data for the login modal
     $scope.loginData = {};
@@ -23,41 +24,6 @@ angular.module('svBeaconPrototype')
       "61912": {name: "blueberry", color: '#54428C'},
       "28019": {name: "mint", color: '#B8D4B5'},
       "51144": {name: "ice", color: '#85C2E5'}
-    };
-
-    // Create the login modal that we will use later
-    $ionicModal.fromTemplateUrl('features/register/register.tpl.html', {
-      scope: $scope
-    }).then(function (modal) {
-      $scope.modal = modal;
-      $scope.modal.show();
-    });
-
-    // Triggered in the login modal to close it
-    $scope.closeLogin = function () {
-      $scope.modal.hide();
-    };
-
-    // Open the login modal
-    $scope.login = function () {
-      $scope.modal.show();
-    };
-
-    // Perform the login action when the user submits the login form
-    $scope.doLogin = function () {
-      console.log('Doing login', $scope.loginData);
-
-      // Simulate a login delay. Remove this and replace with your login
-      // code if using a login system
-      $timeout(function () {
-        $scope.closeLogin();
-      }, 1000);
-    };
-
-    $scope.startMonitoringForRegion = function _startMonitoringForRegion() {
-      $cordovaBeacon.startMonitoringForRegion($cordovaBeacon.createBeaconRegion(
-        brIdentifier, brUuid, brMajor, brMinor, brNotifyEntryStateOnDisplay
-      ));
     };
 
     $scope.requestAlwaysAuthorization = function () {
@@ -73,11 +39,6 @@ angular.module('svBeaconPrototype')
       });
     };
 
-    $scope.stopMonitoringForRegion = function () {
-      $cordovaBeacon.stopMonitoringForRegion($cordovaBeacon.createBeaconRegion(
-        brIdentifier, brUuid, brMajor, brMinor, brNotifyEntryStateOnDisplay
-      ));
-    };
     $scope.stopRangingBeaconsInRegion = function () {
       $scope.rangedBeacons = [];
       $cordovaBeacon.stopRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion(
@@ -103,14 +64,6 @@ angular.module('svBeaconPrototype')
       return deferred.promise;
     }
 
-    //$rootScope.$on("$cordovaBeacon:didStartMonitoringForRegion", function (event, pluginResult) {
-    //  $log.info('$cordovaBeacon:didStartMonitoringForRegion', pluginResult);
-    //});
-    //
-    //$rootScope.$on("$cordovaBeacon:didDetermineStateForRegion", function (event, pluginResult) {
-    //  $log.info('$cordovaBeacon:didDetermineStateForRegion', pluginResult);
-    //});
-
     $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function (event, pluginResult) {
       $log.info('$cordovaBeacon:didRangeBeaconsInRegion', pluginResult);
       $scope.rangedBeacons = [];
@@ -128,17 +81,5 @@ angular.module('svBeaconPrototype')
     $rootScope.$on("$cordovaBeacon:didExitRegion", function (event, pluginResult) {
       $log.info('$cordovaBeacon:didExitRegion', pluginResult);
     });
-
-    //$rootScope.$on("$cordovaBeacon:peripheralManagerDidStartAdvertising", function (event, pluginResult) {
-    //  $log.info('$cordovaBeacon:peripheralManagerDidStartAdvertising', pluginResult);
-    //});
-    //
-    //$rootScope.$on("$cordovaBeacon:peripheralManagerDidUpdateState", function (event, pluginResult) {
-    //  $log.info('$cordovaBeacon:peripheralManagerDidUpdateState', pluginResult);
-    //});
-    //
-    //$rootScope.$on("$cordovaBeacon:didChangeAuthorizationStatus", function (event, pluginResult) {
-    //  $log.info('$cordovaBeacon:didChangeAuthorizationStatus', pluginResult);
-    //});
 
   });

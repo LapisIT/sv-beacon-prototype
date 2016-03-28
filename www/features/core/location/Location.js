@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('speciesReporting.location', [])
+angular.module('svBeaconPrototype.location', [])
 	.factory('Location',
 		function ($log, $q, $window, Validations, MapDefaults) {
 			$log.info('Locations...');

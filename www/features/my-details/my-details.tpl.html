@@ -6,8 +6,7 @@
       <p class="hint-text" style="margin-top: 10px;">
         <i class="icon ion-android-bulb"></i>
         <text>
-          This information will be used each time you make a report.
-          <br/>To update your details, you can come back to this screen at anytime.
+          This information will be used to improve application usability based on your usage.
         </text>
       </p>
       <div class="list">
@@ -20,7 +19,7 @@
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Mobile</span>
-          <input name="mobile" type="tel" placeholder="Please enter your mobile number" ng-model="myDetails.mobile"
+          <input name="mobile" type="tel" placeholder="Please enter your mobile number" ng-model="myDetails.phone"
                  ng-pattern="patterns.phone" required>
           <notification message="msgPhoneRequired"
                         show="showError" invalid="form.mobile.$error.required"></notification>

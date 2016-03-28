@@ -1,4 +1,4 @@
-angular.module('speciesReporting.photo').directive('camera', function () {
+angular.module('svBeaconPrototype.photo').directive('camera', function () {
   'use strict';
 
   return {

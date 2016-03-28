@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('speciesReporting.messages', [])
+angular.module('svBeaconPrototype.messages', [])
   .factory('Messages', function () {
     var Messages = {};
     Messages.initMessages = function(props) {

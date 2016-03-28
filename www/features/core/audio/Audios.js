@@ -1,4 +1,4 @@
-angular.module('speciesReporting.species')
+angular.module('svBeaconPrototype.species')
 	.factory('Audios',
 		function ($http, $q, $log, $interval, Audio, Validations) {
 			var Audios = {}, isDefined = Validations.isDefined,

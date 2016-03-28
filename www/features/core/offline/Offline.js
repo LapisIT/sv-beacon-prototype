@@ -1,4 +1,4 @@
-angular.module('speciesReporting.offline',[])
+angular.module('svBeaconPrototype.offline',[])
   .factory('Offline',
     function ($window, $log, $http, $q) {
       'use strict';

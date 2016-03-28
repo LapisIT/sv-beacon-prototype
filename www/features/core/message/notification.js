@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('speciesReporting.messages')
+angular.module('svBeaconPrototype.messages')
   .directive('notification', function ($log, $compile) {
     return {
       templateUrl: 'features/core/message/notification.html',
