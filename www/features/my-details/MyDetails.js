@@ -10,7 +10,7 @@ angular.module('svBeaconPrototype')
 				storage = $localStorage.$default({
 					myDetails: {
 						name: '',
-						mobile: '',
+						phone: '',
 						email: ''
 					}
 				});

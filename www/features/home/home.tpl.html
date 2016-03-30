@@ -1,17 +1,31 @@
 <ion-view view-title="Home" hide-back-button="true" hide-nav-bar="true">
   <ion-content class="padding" style="background-color: rgba(239, 239, 239, 0.4);padding-top: 30px;">
-    <img src="./features/home/sv-logo.png" style="width: 120px;">
-    <hr/>
-    <p>
+    <img src="./features/home/sv-logo.png" style="width: 150px; margin-left: -7px;">
+    <color-bars-wrapper>
+      <color-bars>
+        <dark-green></dark-green>
+        <mild-green></mild-green>
+        <light-green></light-green>
+        <orange></orange>
+        <mild-blue></mild-blue>
+        <light-blue></light-blue>
+        <dark-blue></dark-blue>
+      </color-bars>
+    </color-bars-wrapper>
+    <div>
       <h4>Welcome to SV Beacon demo</h4>
-    This project is a demonstration of IBeacon capability in combination with ionic.
-    </p>
+      This project is a demonstration of IBeacon capability in combination with ionic.
+    </div>
     <img src="./features/home/ibeacon.png" style="width: 100px;">
-    <p>
+    <br/><br/>
+    <div ng-if="!isBluetoothEnabled">
+      <h4 class="assertive">Bluetooth is not enabled</h4>
       You need to enable your device bluetooth to use this application.
-    </p>
-    <p>
-
-    </p>
+    </div>
+    <div ng-show="isBluetoothEnabled">
+      <h4 class="positive">Bluetooth is active</h4>
+      You will receive messages when you are in the proximity of one of the SV beacons.
+    </div>
+    <p ng-if="checkBluetooth()"></p>
   </ion-content>
 </ion-view>

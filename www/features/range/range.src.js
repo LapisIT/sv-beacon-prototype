@@ -4,17 +4,19 @@
  */
 angular.module('svBeaconPrototype')
 
-  .controller('RangeCtrl', function ($scope, $rootScope, $ionicModal, $ionicPopup, $timeout, $log, $ionicPlatform, $cordovaBeacon, $q, MyDetails, Validations) {
+  .controller('RangeCtrl', function ($scope, $rootScope, $ionicModal, $ionicPopup, $timeout, $log, $ionicPlatform, $cordovaBeacon, $q, MyDetails, Validations, Signals) {
 
     var brIdentifier = 'estimote',
       brUuid = 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
       brMajor = null,
       brMinor = null,
       brNotifyEntryStateOnDisplay = true,
+      myDetails,
       isEmpty = Validations.isEmpty;
 
     // Form data for the login modal
     $scope.loginData = {};
+    $scope.ranging = false;
 
     $scope.rangedBeacons = [];
     $scope.names = {
@@ -36,6 +38,7 @@ angular.module('svBeaconPrototype')
         $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion(
           brIdentifier, brUuid, brMajor, brMinor, brNotifyEntryStateOnDisplay
         ));
+        $scope.ranging = true;
       });
     };
 
@@ -44,6 +47,7 @@ angular.module('svBeaconPrototype')
       $cordovaBeacon.stopRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion(
         brIdentifier, brUuid, brMajor, brMinor, brNotifyEntryStateOnDisplay
       ));
+      $scope.ranging = false;
     };
 
 
@@ -64,22 +68,43 @@ angular.module('svBeaconPrototype')
       return deferred.promise;
     }
 
-    $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function (event, pluginResult) {
+    MyDetails.find().then(function(found){
+      myDetails = found;
+    });
+
+    var unregisterRanging = $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function (event, pluginResult) {
       $log.info('$cordovaBeacon:didRangeBeaconsInRegion', pluginResult);
       $scope.rangedBeacons = [];
       angular.forEach(pluginResult.beacons, function (beacon) {
         if (beacon.accuracy >= 0) {
-          $scope.rangedBeacons.push(beacon)
+          $scope.rangedBeacons.push(beacon);
+          var transformed = angular.copy(beacon);
+          delete transformed.rssi;
+          Signals.send({
+            beacon: transformed,
+            user: myDetails
+          });
         }
       })
     });
 
-    $rootScope.$on("$cordovaBeacon:didEnterRegion", function (event, pluginResult) {
+    var unregisterDidEnterRegion = $rootScope.$on("$cordovaBeacon:didEnterRegion", function (event, pluginResult) {
       $log.info('$cordovaBeacon:didEnterRegion', pluginResult);
     });
 
-    $rootScope.$on("$cordovaBeacon:didExitRegion", function (event, pluginResult) {
+    var unregisterDidExitRegion = $rootScope.$on("$cordovaBeacon:didExitRegion", function (event, pluginResult) {
       $log.info('$cordovaBeacon:didExitRegion', pluginResult);
     });
+
+    $scope.$on('$ionicView.beforeLeave',
+      function (event, view) {
+        $log.info('$ionicView.EditReportSoundCtrl beforeLeave', view);
+        if ($scope.ranging) {
+          unregisterRanging();
+          unregisterDidEnterRegion();
+          unregisterDidExitRegion();
+          $scope.stopRangingBeaconsInRegion();
+        }
+      });
 
   });

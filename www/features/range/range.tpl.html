@@ -13,13 +13,13 @@
         You will see a list of beacons sorted based on their distance from your device.
       </text>
     </p>
-    <button ng-if="rangedBeacons.length === 0" class="button button-full button-positive" ng-click="startRangingBeaconsInRegion()">
+    <button ng-if="!ranging" class="button button-full button-positive" ng-click="startRangingBeaconsInRegion()">
       Range Beacons
     </button>
     <!--<button class="button button-full button-positive" ng-click="startMonitoringForRegion()">-->
     <!--startMonitoringForRegion-->
     <!--</button>-->
-    <button ng-if="rangedBeacons.length > 0" class="button button-full button-assertive" ng-click="stopRangingBeaconsInRegion()">
+    <button ng-if="ranging" class="button button-full button-assertive" ng-click="stopRangingBeaconsInRegion()">
       Stop Ranging
     </button>
     <!--<button class="button button-full button-positive" ng-click="stopMonitoringForRegion()">-->

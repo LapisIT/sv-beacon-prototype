@@ -1,0 +1,52 @@
+$svDarkBlue: #345085;
+$svMildBlue: #5586C6;
+$svLightBlue: #70C2ED;
+$svOrange: #F29F00;
+$svLightGreen: #CEDF00;
+$svMildGreen: #7CBC2C;
+$svDarkGreen: #477B00;
+
+color-bars-wrapper {
+  position: relative;
+  width: 100%;
+  height: 5px;
+  margin: 10px 0 20px 0;
+  display: block;
+}
+
+color-bars {
+  display: block;
+  * {
+    height: 5px;
+    display: inline-block;
+    float: left;
+  }
+  dark-blue {
+    background-color: $svDarkBlue;
+    width: 51%;
+  }
+  mild-blue {
+    background-color: $svMildBlue;
+    width: 8%;
+  }
+  light-blue {
+    background-color: $svLightBlue;
+    width: 10%;
+  }
+  orange {
+    background-color: $svOrange;
+    width: 8%;
+  }
+  light-green {
+    background-color: $svLightGreen;
+    width: 3%;
+  }
+  mild-green {
+    background-color: $svMildGreen;
+    width: 5%;
+  }
+  dark-green {
+    background-color: $svDarkGreen;
+    width: 15%;
+  }
+}

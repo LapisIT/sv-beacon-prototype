@@ -20,6 +20,9 @@ $ionicons-font-path: "../lib/ionic/release/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+@import "scss/colours";
+@import "scss/icons";
+@import "www/features/home/home";
 @import "www/features/side-menu/side-menu";
 
 .hint-text {

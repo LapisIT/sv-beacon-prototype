@@ -1,4 +1,5 @@
-.menu {
+ion-side-menu.menu {
+  background-color: lighten($side-menu-bg, 5%);
   .icomoon:before {
     font-size: 3em;
     position: absolute;
@@ -6,69 +7,8 @@
   }
 
   .icon.species:before {
-    content: $species-icon;
     font-size: 2.2em;
     left: 5px;
-  }
-
-  .icon.frog:before {
-    content: $frog-icon;
-    left: 6px;
-    font-size: 2em;
-  }
-
-  ion-item.frog a.item-content {
-    background-color: $frog-color;
-  }
-
-  ion-item.frog, ion-item.waterbird, ion-item.fish, ion-item.mammal {
-    border: none;
-  }
-
-  .icon.waterbird:before {
-    content: $waterbird-icon;
-    left: 5px;
-    font-size: 2em;
-  }
-
-  ion-item.waterbird a.item-content {
-    background-color: $waterbird-color;
-  }
-
-  .icon.fish:before {
-    content: $fish-icon;
-    left: 5px;
-    font-size: 2em;
-  }
-
-  ion-item.fish a.item-content {
-    background-color: $fish-color;
-  }
-
-  .icon.mammal:before {
-    content: $mammal-icon;
-    left: 5px;
-    font-size: 2em;
-  }
-
-  ion-item.mammal a.item-content {
-    background-color: $mammal-color;
-  }
-
-  .icon.map:before {
-    content: $map-icon;
-  }
-
-  .icon.home:before {
-    content: $home-icon;
-  }
-
-  .icon.reports:before {
-    content: $report-icon;
-  }
-
-  .icon.info:before {
-    content: $info-icon;
   }
 
   .icon:not(.icomoon):before {
@@ -90,6 +30,15 @@
 
   .icon.my-details:before {
     content: $my-details-icon;
+  }
+
+  .icon.range:before {
+    content: $range-icon;
+    margin-top: 7px;
+  }
+
+  .icon.home:before {
+    content: $home-icon;
   }
 
   ion-item.species > a {
@@ -154,7 +103,7 @@
   }
   div.my-details {
     background-color: $side-menu-bg;
-    padding: 12px 10px;
+    padding: 22px 10px 12px 10px;
   }
 }
 
