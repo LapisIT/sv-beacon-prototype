@@ -31,6 +31,10 @@
     <script src="features/apis/Firebases.js"></script>
     <script src="features/apis/Locations.js"></script>
     <script src="features/apis/validations/Validations.js"></script>
+    <script src="features/beacons/Beacons.src.js"></script>
+    <script src="features/beacons/Monitors.src.js"></script>
+    <script src="features/beacons/Ranges.src.js"></script>
+    <script src="features/cordova/Cordovas.src.js"></script>
     <script src="features/core/audio/audio.js"></script>
     <script src="features/core/network/Network.js"></script>
     <script src="features/core/date/date.js"></script>
@@ -41,6 +45,7 @@
     <script src="features/core/validation/Validations.js"></script>
     <script src="features/core/message/Messages.js"></script>
     <script src="features/core/message/notification.js"></script>
+    <script src="features/core/date/date.js"></script>
     <script src="features/core/google/GeoCodes.js"></script>
     <script src="features/core/offline/Offline.js"></script>
     <script src="features/core/google-analytics/GoogleAnalytics.js"></script>
@@ -56,6 +61,17 @@
   </head>
 
   <body ng-app="svBeaconPrototype">
+  <div id="logger"
+       style="width: 100%; height: 100%;position: fixed;top:0;left: 0; z-index: 1000000;background-color:#fff;padding:30px 20px 10px 20px; overflow-y: scroll; display: none;">
+    <button class="button button-balanced button-full button-highlight"  onclick="hideLogs()">
+      Hide logs
+    </button>
+    <button class="button button-assertive button-full"  onclick="clearLogs()">
+      Clear logs
+    </button>
+    <br/>
+    <br/>
+  </div>
     <ion-nav-view></ion-nav-view>
   </body>
 </html>

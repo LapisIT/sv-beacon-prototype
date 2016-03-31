@@ -4,10 +4,16 @@
  */
 angular.module('svBeaconPrototype')
 
-  .factory('Monitors', function ($cordovaBeacon) {
+  .factory('Monitors', function ($cordovaBeacon, $q, Cordovas) {
+
+    function _start(beaconRegion){
+      return Cordovas.isPluginsReady(['locationManager']).then(function(){
+        return $cordovaBeacon.startMonitoringForRegion(beaconRegion);
+      });
+    }
 
     return {
-      start: $cordovaBeacon.startMonitoringForRegion,
+      start: _start,
       stop: $cordovaBeacon.stopMonitoringForRegion
     }
 

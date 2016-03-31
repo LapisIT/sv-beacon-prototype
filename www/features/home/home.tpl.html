@@ -1,6 +1,6 @@
 <ion-view view-title="Home" hide-back-button="true" hide-nav-bar="true">
-  <ion-content class="padding" style="background-color: rgba(239, 239, 239, 0.4);padding-top: 30px;">
-    <img src="./features/home/sv-logo.png" style="width: 150px; margin-left: -7px;">
+  <div class="bar-light">
+    <img src="./features/home/sv-logo.png" style="width: 130px; margin-top: 20px; margin-left:7px;">
     <color-bars-wrapper>
       <color-bars>
         <dark-green></dark-green>
@@ -12,20 +12,54 @@
         <dark-blue></dark-blue>
       </color-bars>
     </color-bars-wrapper>
+  </div>
+  <ion-content class="padding" style="background-color: rgba(239, 239, 239, 0.4); top:112px;bottom:23px;">
     <div>
-      <h4>Welcome to SV Beacon demo</h4>
-      This project is a demonstration of IBeacon capability in combination with ionic.
+      <h4>Welcome to SV Events</h4>
+      Here is the list of events which is happening at Spatial Vision now.
+      <!--This project is a demonstration of IBeacon capability in combination with ionic.-->
     </div>
-    <img src="./features/home/ibeacon.png" style="width: 100px;">
-    <br/><br/>
-    <div ng-if="!isBluetoothEnabled">
-      <h4 class="assertive">Bluetooth is not enabled</h4>
-      You need to enable your device bluetooth to use this application.
+    <!--<img src="./features/home/ibeacon.png" style="width: 100px;">-->
+
+    <div class="list card" ng-show="event">
+
+      <div class="item item-avatar">
+        <img src="./features/home/avatar.jpeg">
+        <h2 ng-bind="event.name"></h2>
+        <p>March 26, 2016</p>
+      </div>
+
+      <div class="item item-body">
+        <p style="margin-top: 0;">
+          In this 90 minute session, you will be taken on a tightly compact run-through of the multiple stages of a
+          typical website project, from the very first step to the very last drop.
+        </p>
+        <p>Organised by {{event.organiser}}</p>
+      </div>
+      <div class="item item-toggle" style="overflow: visible;">
+        Notifications<br/>
+        <small ng-if="event.notifications" style="font-size:.8em;">Listening to this events' notifications.</small>
+        <small ng-if="!event.notifications" style="font-size:.8em;">Enable to receive notifications.</small>
+        <label class="toggle toggle-positive">
+          <input type="checkbox" ng-model="event.notifications">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </div>
     </div>
-    <div ng-show="isBluetoothEnabled">
-      <h4 class="positive">Bluetooth is active</h4>
-      You will receive messages when you are in the proximity of one of the SV beacons.
-    </div>
-    <p ng-if="checkBluetooth()"></p>
+
   </ion-content>
+  <div class="bar bar-footer" style="padding: 0px; height: auto; font-size: .9em;"
+       ng-class="{true:'bar-positive', false:'bar-dark'}[isBluetoothEnabled]">
+    <wrapper style="display: block; margin: 0 auto;">
+      <i class="icon ion-bluetooth" style="margin-right: 5px;"></i>
+      <small ng-show="!isBluetoothEnabled">
+        Bluetooth is disabled
+      </small>
+      <small ng-show="isBluetoothEnabled">
+        Bluetooth is enabled
+      </small>
+    </wrapper>
+  </div>
 </ion-view>

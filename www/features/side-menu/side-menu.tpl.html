@@ -27,18 +27,10 @@
                     <i class="icon range"></i>
                     Range Beacons
                 </ion-item>
-
-                <ion-item ng-if="isDebugMode" menu-close href="" ng-click="go('app.clear-cache')">
-                    Clear cache
-                </ion-item>
-                <ion-item menu-close href="" ng-click="go('app.validate-species')"
-                          ng-if="isWebUat && isDebugMode">
-                    Validate Species Data
-                </ion-item>
                 <ion-item ng-if="isDebugMode" menu-close href="" ng-click="showLogs()">
-                    Show logs
+                  <i class="icon debug"></i>
+                  Show debug logs
                 </ion-item>
-
                 <div menu-close href="" style="padding:10px;color: #fff;">
                     version: {{appVersion}}
                 </div>

@@ -12,7 +12,7 @@ angular.module('svBeaconPrototype').controller('SideMenuCtrl', function ($scope,
     var logger = document.getElementById('logger');
     logger.innerHTML = '<button class="button button-balanced button-full button-highlight" ' +
       'onclick="hideLogs()">Hide logs </button> <button class="button button-assertive button-full"' +
-      'onclick="clearLogs()">Clear logs </button> <br/> <br/>' + $window.spr.logs;
+      'onclick="clearLogs()">Clear logs </button> <br/> <br/>' + $window.sv.logs;
   };
 
   $scope.$watch(function () {
