@@ -1,8 +1,8 @@
 angular.module('svBeaconPrototype')
   .factory('Firebases',
     function ($http, $q, $log,
-              ApisValidations) {
-      var Firebases = {}, isDefined = ApisValidations.isDefined, isEmpty = ApisValidations.isEmpty;
+              Validations) {
+      var Firebases = {}, isDefined = Validations.isDefined, isEmpty = Validations.isEmpty;
       //https://glowing-inferno-5531.firebaseio.com/
       //https://q8ey5cxtdfh.firebaseio-demo.com/
       var rootRef = new Firebase('https://glowing-inferno-5531.firebaseio.com/');
@@ -14,7 +14,7 @@ angular.module('svBeaconPrototype')
         deferred.resolve(rootRef);
 
         return deferred.promise;
-      }
+      };
 
 
       return Firebases;

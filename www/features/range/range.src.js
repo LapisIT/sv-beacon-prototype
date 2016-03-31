@@ -4,12 +4,11 @@
  */
 angular.module('svBeaconPrototype')
 
-  .controller('RangeCtrl', function ($scope, $rootScope, $ionicModal, $ionicPopup, $timeout, $log, $ionicPlatform, $cordovaBeacon, $q, DateUtil, MyDetails, Validations, Signals, Ranges, Beacons, Events) {
+  .controller('RangeCtrl', function ($scope, $rootScope, $ionicModal, $ionicPopup, $timeout, $log, $ionicPlatform, $cordovaBeacon, $q, Validations, Signals, Ranges, Beacons, Events) {
 
     var brIdentifier = 'estimote',
       brNotifyEntryStateOnDisplay = true,
-      myDetails,
-      monitoredRegion;
+      rangedRegion;
 
     $scope.ranging = false;
 
@@ -21,7 +20,7 @@ angular.module('svBeaconPrototype')
         Beacons.requestAlwaysAuthorization();
         Beacons.createRegion(brIdentifier, event.id, null, null, brNotifyEntryStateOnDisplay).then(function (createdRegion) {
           $log.info('HomeCtrl _startMonitoringForRegion()', createdRegion);
-          monitoredRegion = createdRegion;
+          rangedRegion = createdRegion;
           Ranges.start(createdRegion);
         });
         $scope.ranging = true;
@@ -30,7 +29,7 @@ angular.module('svBeaconPrototype')
 
     $scope.stopRangingBeaconsInRegion = function () {
       $scope.rangedBeacons = [];
-      Ranges.stop(monitoredRegion);
+      Ranges.stop(rangedRegion);
       $scope.ranging = false;
     };
 
@@ -51,18 +50,14 @@ angular.module('svBeaconPrototype')
       return deferred.promise;
     }
 
-    var unRegisterRanging = $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function (event, pluginResult) {
+    $scope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function (event, pluginResult) {
       $log.info('$cordovaBeacon:didRangeBeaconsInRegion', pluginResult);
       $scope.rangedBeacons = [];
       angular.forEach(pluginResult.beacons, function (beacon) {
         $scope.rangedBeacons.push(beacon);
         var transformed = angular.copy(beacon);
         delete transformed.rssi;
-        Signals.send({
-          beacon: transformed,
-          user: myDetails,
-          receivedAt: DateUtil.now()
-        });
+        Signals.send(beacon.uuid, beacon.major, beacon.minor, 'RANGE', beacon.proximity, beacon.accuracy);
       })
     });
 
@@ -70,14 +65,9 @@ angular.module('svBeaconPrototype')
       function (event, view) {
         $log.info('$ionicView.EditReportSoundCtrl beforeLeave', view);
         if ($scope.ranging) {
-          unRegisterRanging();
           $scope.stopRangingBeaconsInRegion();
         }
       });
-
-    MyDetails.find().then(function (found) {
-      myDetails = found;
-    });
 
     Events.load().then(function (event) {
       $log.info('HomeCtrl, got events information!', event);

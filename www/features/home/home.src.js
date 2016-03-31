@@ -7,72 +7,37 @@ angular.module('svBeaconPrototype')
 
   .controller('HomeCtrl', function ($scope, $rootScope, $log, $stateParams, $ionicModal, $ionicPopup, $cordovaBeacon,
                                     $timeout, $ionicPlatform,
-                                    $window, $interval, Validations, MyDetails, Beacons, Monitors, Events, Signals) {
+                                    $window, $interval, Validations, Beacons, Monitors, Events, Signals, MyDetails) {
     $log.info('HomeCtrl...');
     var isEmpty = Validations.isEmpty,
-      myDetails,
       brNotifyEntryStateOnDisplay = true,
-      unRegisterDidEnterRegion,
-      unRegisterDidExitRegion,
-      unRegisterPeripheralManagerDidStartAdvertising,
-      unRegisterPeripheralManagerDidUpdateState,
-      unRegisterBeforeLeave;
+      monitoredRegion;
 
     $scope.monitoring = false;
-    $scope.isBluetoothEnabled = false;
-
-    function _checkBluetoothStatus() {
-      Beacons.isBluetoothEnabled().then(function (isBluetoothEnabled) {
-        $log.info('isBluetoothEnabled', isBluetoothEnabled);
-        $scope.isBluetoothEnabled = isBluetoothEnabled;
-      });
-    };
 
     function _registerNgEvents() {
-      unRegisterDidEnterRegion = $rootScope.$on("$cordovaBeacon:didEnterRegion", function (event, pluginResult) {
+      $scope.$on("$cordovaBeacon:didEnterRegion", function (event, pluginResult) {
+        Signals.send(pluginResult.region.uuid, pluginResult.region.major, pluginResult.region.minor, 'ENTER');
         $log.info('$cordovaBeacon:didEnterRegion', pluginResult);
-        var alertPopup = $ionicPopup.alert({
+        $ionicPopup.alert({
           title: 'Welcome to ' + pluginResult.region.identifier + '!',
           template: 'I will be your beacon for this session.'
         });
       });
-      unRegisterDidExitRegion = $rootScope.$on("$cordovaBeacon:didExitRegion", function (event, pluginResult) {
+
+      $scope.$on("$cordovaBeacon:didExitRegion", function (event, pluginResult) {
+        Signals.send(pluginResult.region.uuid, pluginResult.region.major, pluginResult.region.minor, 'EXIT');
         $log.info('$cordovaBeacon:didExitRegion', pluginResult);
-        var alertPopup = $ionicPopup.alert({
+        $ionicPopup.alert({
           title: 'You are going out of ' + pluginResult.region.identifier + '!',
           template: 'See you later.'
         });
-        Signals.send({
-          beacon: {
-            major: pluginResult.region.major,
-            minor: pluginResult.region.minor,
-            uuid: pluginResult.region.uuid
-          },
-          user: myDetails,
-          receivedAt: DateUtil.now()
-        });
-      })
-      unRegisterPeripheralManagerDidStartAdvertising = $rootScope.$on("$cordovaBeacon:peripheralManagerDidStartAdvertising", function (event, pluginResult) {
-        $log.info('$cordovaBeacon:peripheralManagerDidUpdateState', pluginResult);
-        $scope.isBluetoothEnabled = true;
       });
-      unRegisterPeripheralManagerDidUpdateState = $rootScope.$on("$cordovaBeacon:peripheralManagerDidUpdateState", function (event, pluginResult) {
-        $log.info('$cordovaBeacon:peripheralManagerDidUpdateState', pluginResult);
-        $scope.isBluetoothEnabled = (pluginResult.state === 'PeripheralManagerStatePoweredOn');
-      });
-      unRegisterBeforeLeave = $scope.$on('$ionicView.beforeLeave', _onIonicViewLeave);
-    }
 
-    function _onIonicViewLeave(event, view) {
-      $log.info('$ionicView.HomeCtrl beforeLeave', view);
-      if ($scope.ranging) {
-        unRegisterDidEnterRegion();
-        unRegisterDidExitRegion();
-        unRegisterPeripheralManagerDidUpdateState();
-        unRegisterPeripheralManagerDidStartAdvertising();
-        unRegisterBeforeLeave();
-        $scope.stopRangingBeaconsInRegion();
-      }
+      $scope.$on('$ionicView.beforeLeave', function _onIonicViewLeave(event, view) {
+        $log.info('$ionicView.HomeCtrl beforeLeave', view);
+        Monitors.stop(monitoredRegion);
+      });
     }
 
     function _monitorSVEvent(event) {
@@ -81,6 +46,7 @@ angular.module('svBeaconPrototype')
         Beacons.createRegion(
           beacon.locationName, event.id, beacon.major, beacon.minor, brNotifyEntryStateOnDisplay
         ).then(function (createdRegion) {
+          monitoredRegion = createdRegion;
           Monitors.start(createdRegion);
         })
       });
@@ -96,8 +62,6 @@ angular.module('svBeaconPrototype')
 
     function _init(svEvent) {
       $log.info('HomeCtrl _init()');
-
-      _checkBluetoothStatus();
 
       _registerNgEvents();
 
@@ -117,7 +81,6 @@ angular.module('svBeaconPrototype')
         });
         return;
       }
-      myDetails = found;
       _loadSVEventInformation().then(function (svEvent) {
         $scope.event = svEvent;
         _init(svEvent);

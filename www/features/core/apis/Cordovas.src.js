@@ -67,13 +67,21 @@ angular.module('svBeaconPrototype')
       return deferred.promise;
     }
 
+    function _isAppReady(){
+      var deferred = $q.defer();
+      $ionicPlatform.ready(function(){
+        deferred.resolve();
+      })
+      return deferred.promise;
+    }
+
     $ionicPlatform.ready(function () {
       _init(INITIS.READY);
     });
 
     return {
       isPluginsReady: _isPluginsReady,
-      isAppReady: $ionicPlatform.ready
+      isAppReady: _isAppReady
     }
 
   });

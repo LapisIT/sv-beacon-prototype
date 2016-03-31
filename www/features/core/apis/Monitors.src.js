@@ -12,9 +12,15 @@ angular.module('svBeaconPrototype')
       });
     }
 
+    function _stop(beaconRegion){
+      return Cordovas.isPluginsReady(['locationManager']).then(function(){
+        return $cordovaBeacon.stopMonitoringForRegion(beaconRegion);
+      });
+    }
+
     return {
       start: _start,
-      stop: $cordovaBeacon.stopMonitoringForRegion
+      stop: _stop
     }
 
   });

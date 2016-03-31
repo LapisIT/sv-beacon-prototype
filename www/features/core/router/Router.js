@@ -6,11 +6,7 @@
 angular.module('svBeaconPrototype.router', [])
 	.factory('Router', function ($log, $rootScope, $state, $stateParams, $ionicViewSwitcher) {
 		var Router = {}, originalSoftBack = $rootScope.$ionicGoBack,
-			hardBackRoutes = {
-				'app.species-list': 'app.home',
-				'app.my-reports-edit-species': 'app.my-reports-edit-photo',
-				'app.my-reports-edit-photo': 'app.home'
-			};
+			hardBackRoutes = {};
 
 		Router.go = function (state, params) {
 			$log.info('Router.go ', state, angular.toJson(params));
@@ -31,15 +27,6 @@ angular.module('svBeaconPrototype.router', [])
 					originalSoftBack();
 				}
 			};
-
-			$rootScope.$on('$ionicView.beforeEnter',
-				function(event, view){
-					$log.info('$ionicView.beforeEnter', view);
-					$rootScope.theme = '';
-					if(view && view.stateParams && view.stateParams.category){
-						$rootScope.theme = view.stateParams.category.toLowerCase();
-					}
-				});
 
 		}
 

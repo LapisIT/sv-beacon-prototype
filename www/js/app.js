@@ -1,5 +1,5 @@
 window.sv = {};
-window.sv.isDebugMode = false;
+window.sv.isDebugMode = true;
 
 window.sv.logs = (function () {
   var logs = [];
@@ -109,17 +109,19 @@ angular.module('svBeaconPrototype', [
       if ($window.screen && $window.screen.lockOrientation) {
         $window.screen.lockOrientation('portrait');
       }
-
-      Router.init($rootScope);
-
     }
+
+    Cordovas.isAppReady().then(function(){
+      Router.init($rootScope);
+    });
 
     Cordovas.isPluginsReady().then(function () {
       init();
     })
   })
 
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+    $ionicConfigProvider.views.swipeBackEnabled(false);
     $stateProvider
 
       .state('app', {
@@ -131,7 +133,6 @@ angular.module('svBeaconPrototype', [
 
       .state('app.home', {
         url: '/home',
-        cache:false,
         views: {
           'menuContent': {
             templateUrl: 'features/home/home.tpl.html',

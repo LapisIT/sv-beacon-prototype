@@ -30,10 +30,9 @@
       </div>
 
       <div class="item item-body">
-        <p style="margin-top: 0;">
-          In this 90 minute session, you will be taken on a tightly compact run-through of the multiple stages of a
-          typical website project, from the very first step to the very last drop.
-        </p>
+        <p style="margin-top: 0;" ng-bind="event.summary"></p>
+        <p>Presenters: {{event.presenters}}</p>
+        <p>Website: <a style="margin-top: 0;" ng-href="{{event.website}}" target="_blank">{{event.website}}</a></p>
         <p>Organised by {{event.organiser}}</p>
       </div>
       <div class="item item-toggle" style="overflow: visible;">
