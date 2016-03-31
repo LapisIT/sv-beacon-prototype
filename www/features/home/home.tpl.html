@@ -21,26 +21,26 @@
     </div>
     <!--<img src="./features/home/ibeacon.png" style="width: 100px;">-->
 
-    <div class="list card" ng-show="event">
+    <div class="list card" ng-show="svEvent">
 
       <div class="item item-avatar">
         <img src="./features/home/avatar.jpeg">
-        <h2 ng-bind="event.name"></h2>
+        <h2 ng-bind="svEvent.name"></h2>
         <p>March 26, 2016</p>
       </div>
 
       <div class="item item-body">
-        <p style="margin-top: 0;" ng-bind="event.summary"></p>
-        <p>Presenters: {{event.presenters}}</p>
-        <p>Website: <a style="margin-top: 0;" ng-href="{{event.website}}" target="_blank">{{event.website}}</a></p>
-        <p>Organised by {{event.organiser}}</p>
+        <p style="margin-top: 0;" ng-bind="svEvent.summary"></p>
+        <p>Presenters: {{svEvent.presenters}}</p>
+        <p>Website: <a style="margin-top: 0;" ng-href="{{svEvent.website}}" target="_blank">{{svEvent.website}}</a></p>
+        <p>Organised by {{svEvent.organiser}}</p>
       </div>
       <div class="item item-toggle" style="overflow: visible;">
         Notifications<br/>
-        <small ng-if="event.notifications" style="font-size:.8em;">Listening to this events' notifications.</small>
-        <small ng-if="!event.notifications" style="font-size:.8em;">Enable to receive notifications.</small>
+        <small ng-if="svEvent.notifications" style="font-size:.8em;">Listening to this events' notifications.</small>
+        <small ng-if="!svEvent.notifications" style="font-size:.8em;">Enable to receive notifications.</small>
         <label class="toggle toggle-positive">
-          <input type="checkbox" ng-model="event.notifications">
+          <input type="checkbox" ng-model="svEvent.notifications">
           <div class="track">
             <div class="handle"></div>
           </div>

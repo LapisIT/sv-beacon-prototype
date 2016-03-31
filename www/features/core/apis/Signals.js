@@ -22,8 +22,8 @@ angular.module('svBeaconPrototype')
             uuid: uuid,
             major: major,
             minor: minor,
-            proximity: proximity?proximity:'',
-            accuracy: accuracy?accuracy:'',
+            proximity: isEmpty(proximity) ? '' : proximity,
+            accuracy: isEmpty(accuracy) ? '' : accuracy
           }
         };
 
@@ -40,6 +40,7 @@ angular.module('svBeaconPrototype')
             $log.info("newRef ", newRef);
           });
         })
+
       };
 
       return Signals;

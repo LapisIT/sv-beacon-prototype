@@ -7,49 +7,60 @@ angular.module('svBeaconPrototype')
 
   .controller('HomeCtrl', function ($scope, $rootScope, $log, $stateParams, $ionicModal, $ionicPopup, $cordovaBeacon,
                                     $timeout, $ionicPlatform,
-                                    $window, $interval, Validations, Beacons, Monitors, Events, Signals, MyDetails) {
+                                    $window, $interval, Validations, Beacons, Monitors, Ranges, Events, Signals, MyDetails) {
     $log.info('HomeCtrl...');
     var isEmpty = Validations.isEmpty,
       brNotifyEntryStateOnDisplay = true,
-      monitoredRegion;
+      monitoringRegionName = 'MonitoringRegion',
+      monitoringRegion,
+      sentNotifications = {},
+      svEvent;
 
     $scope.monitoring = false;
 
     function _registerNgEvents() {
       $scope.$on("$cordovaBeacon:didEnterRegion", function (event, pluginResult) {
-        Signals.send(pluginResult.region.uuid, pluginResult.region.major, pluginResult.region.minor, 'ENTER');
+        Signals.send(pluginResult.region.uuid, '', '', 'ENTER');
         $log.info('$cordovaBeacon:didEnterRegion', pluginResult);
-        $ionicPopup.alert({
-          title: 'Welcome to ' + pluginResult.region.identifier + '!',
-          template: 'I will be your beacon for this session.'
-        });
+        Ranges.start(monitoringRegion);
+      });
+
+      $scope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function (event, pluginResult) {
+        $log.info('$cordovaBeacon:didRangeBeaconsInRegion', pluginResult);
+        angular.forEach(pluginResult.beacons, function (beacon) {
+          var transformed = angular.copy(beacon);
+          delete transformed.rssi;
+          Signals.send(beacon.uuid, beacon.major, beacon.minor, 'RANGE', beacon.proximity, beacon.accuracy);
+          $log.info('$cordovaBeacon:didRangeBeaconsInRegion ProximityNear', svEvent.beacons[beacon.uuid + ':' + beacon.major + ':' + beacon.minor].locationName);
+          if ((beacon.proximity === 'ProximityNear' || beacon.proximity === 'ProximityImmediate') && isEmpty(sentNotifications[beacon.uuid + ':' + beacon.major + ':' + beacon.minor])) {
+            sentNotifications[beacon.uuid + ':' + beacon.major + ':' + beacon.minor] = true;
+            $ionicPopup.alert({
+              title: 'Welcome to ' + svEvent.beacons[beacon.uuid + ':' + beacon.major + ':' + beacon.minor].locationName + '!',
+              template: svEvent.beacons[beacon.uuid + ':' + beacon.major + ':' + beacon.minor].proximity.near
+            });
+          }
+          if ((beacon.proximity === 'ProximityFar' || beacon.proximity === 'ProximityUnknown') && !isEmpty(sentNotifications[beacon.uuid + ':' + beacon.major + ':' + beacon.minor])) {
+            delete sentNotifications[beacon.uuid + ':' + beacon.major + ':' + beacon.minor];
+          }
+        })
       });
 
       $scope.$on("$cordovaBeacon:didExitRegion", function (event, pluginResult) {
-        Signals.send(pluginResult.region.uuid, pluginResult.region.major, pluginResult.region.minor, 'EXIT');
+        Signals.send(pluginResult.region.uuid, '', '', 'EXIT');
         $log.info('$cordovaBeacon:didExitRegion', pluginResult);
-        $ionicPopup.alert({
-          title: 'You are going out of ' + pluginResult.region.identifier + '!',
-          template: 'See you later.'
-        });
+        Ranges.stop(monitoringRegion);
+        sentNotifications = {}
       });
 
       $scope.$on('$ionicView.beforeLeave', function _onIonicViewLeave(event, view) {
         $log.info('$ionicView.HomeCtrl beforeLeave', view);
-        Monitors.stop(monitoredRegion);
+        Monitors.stop(monitoringRegion);
       });
     }
 
     function _monitorSVEvent(event) {
-      angular.forEach(event.beacons, function (beacon) {
-        $log.info('HomeCtrl _startMonitoringForRegion()', beacon.locationName, event.id, beacon.major, beacon.minor);
-        Beacons.createRegion(
-          beacon.locationName, event.id, beacon.major, beacon.minor, brNotifyEntryStateOnDisplay
-        ).then(function (createdRegion) {
-          monitoredRegion = createdRegion;
-          Monitors.start(createdRegion);
-        })
-      });
+      $log.info('HomeCtrl _startMonitoringForRegion()', event.id);
+      Monitors.start(monitoringRegion);
     }
 
     function _loadSVEventInformation() {
@@ -69,6 +80,12 @@ angular.module('svBeaconPrototype')
         _monitorSVEvent(svEvent);
       });
 
+      Beacons.createRegion(
+        monitoringRegionName, svEvent.id, null, null, brNotifyEntryStateOnDisplay
+      ).then(function (createdRegion) {
+        monitoringRegion = createdRegion;
+      })
+
     }
 
     MyDetails.find().then(function (found) {
@@ -81,8 +98,8 @@ angular.module('svBeaconPrototype')
         });
         return;
       }
-      _loadSVEventInformation().then(function (svEvent) {
-        $scope.event = svEvent;
+      _loadSVEventInformation().then(function (found) {
+        $scope.svEvent = svEvent = found;
         _init(svEvent);
       });
 
