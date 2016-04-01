@@ -14,8 +14,11 @@ window.sv.logs = (function () {
         if (logs.length > maxLogLengths) {
           window.clearLogs();
         }
-
-        logs.push('<div style="color: ' + colour + ';">' + (JSON.stringify(arguments)) + '</div>');
+        try {
+          logs.push('<div style="color: ' + colour + ';">' + (JSON.stringify(arguments)) + '</div>');
+        } catch (e){
+          console.error('json logger failed to log!');
+        }
         csl.apply(thisArg, arguments);
         return;
       }
