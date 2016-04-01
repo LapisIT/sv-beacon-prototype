@@ -16,9 +16,10 @@
     </button>
     <beacons ng-if="rangedBeacons.length > 0" class="padding" style="display: block;">
       <h4>Ranged Beacons</h4>
-      <div class="card" ng-repeat="beacon in rangedBeacons | orderBy:'accuracy'">
-        <div class="item item-divider" style="background-color: {{event.beacons[beacon.uuid+':'+beacon.major+':'+beacon.minor].colour}}; color: #fff">
-          {{event.beacons[beacon.uuid+':'+beacon.major+':'+beacon.minor].locationName}}
+      <div class="card" ng-repeat="beacon in rangedBeacons | orderBy:'accuracy'"
+      ng-init="colour = findColour(beacon)">
+        <div class="item item-divider" style="background-color: {{colour}}; color: #fff">
+          {{find(beacon).locationName}}
         </div>
         <div class="item item-text-wrap">
           <p>UUID: {{beacon.uuid}}:{{beacon.major}}:{{beacon.minor}}</p>

@@ -5,6 +5,9 @@
 
 angular.module('svBeaconPrototype').factory('Beacons',
   function ($rootScope, $cordovaBeacon, $log, Cordovas) {
+    var toKey = function (uuid, major, minor) {
+      return uuid.toUpperCase() + ':' + major + ':' + minor;
+    }
 
     $rootScope.isBluetoothEnabled = false;
 
@@ -44,6 +47,7 @@ angular.module('svBeaconPrototype').factory('Beacons',
     return {
       createRegion: _createRegion,
       requestAlwaysAuthorization: _requestAlwaysAuthorization,
-      isBluetoothEnabled: _isBluetoothEnabled
+      isBluetoothEnabled: _isBluetoothEnabled,
+      toKey:toKey
     }
   });

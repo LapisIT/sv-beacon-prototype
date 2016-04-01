@@ -31,12 +31,16 @@ angular.module('svBeaconPrototype')
           var transformed = angular.copy(beacon);
           delete transformed.rssi;
           Signals.send(beacon.uuid, beacon.major, beacon.minor, 'RANGE', beacon.proximity, beacon.accuracy);
-          $log.info('$cordovaBeacon:didRangeBeaconsInRegion ProximityNear', svEvent.beacons[beacon.uuid + ':' + beacon.major + ':' + beacon.minor].locationName);
-          if ((beacon.proximity === 'ProximityNear' || beacon.proximity === 'ProximityImmediate') && isEmpty(sentNotifications[beacon.uuid + ':' + beacon.major + ':' + beacon.minor])) {
-            sentNotifications[beacon.uuid + ':' + beacon.major + ':' + beacon.minor] = true;
+          var key = Beacons.toKey(beacon.uuid,beacon.major,beacon.minor),
+            locationName = svEvent.beacons[key].locationName,
+            proximity = svEvent.beacons[key].proximity;
+          $log.info('$cordovaBeacon:didRangeBeaconsInRegion ProximityNear', locationName);
+          if ((beacon.proximity === 'ProximityNear' || beacon.proximity === 'ProximityImmediate')
+            && isEmpty(sentNotifications[key])) {
+            sentNotifications[key] = true;
             $ionicPopup.alert({
-              title: 'Welcome to ' + svEvent.beacons[beacon.uuid + ':' + beacon.major + ':' + beacon.minor].locationName + '!',
-              template: svEvent.beacons[beacon.uuid + ':' + beacon.major + ':' + beacon.minor].proximity.near
+              title: 'Welcome to ' + locationName + '!',
+              template: proximity.near
             });
           }
           if ((beacon.proximity === 'ProximityFar')) {
@@ -88,8 +92,14 @@ angular.module('svBeaconPrototype')
       })
 
     }
-
+    function loadEventInformation() {
+      _loadSVEventInformation().then(function (found) {
+        $scope.svEvent = svEvent = found;
+        _init(svEvent);
+      });
+    }
     MyDetails.find().then(function (found) {
+      $log.info('MyDetails.find ', angular.toJson(found));
       if (isEmpty(found.name) || isEmpty(found.phone) || isEmpty(found.email)) {
         $ionicModal.fromTemplateUrl('features/register/register.tpl.html', {
           scope: $scope
@@ -97,13 +107,14 @@ angular.module('svBeaconPrototype')
           $scope.modal = modal;
           $scope.modal.show();
         });
+        $scope.$on('modal.hidden', function() {
+          // Execute action
+          $log.info('modal.hidden, loading event information');
+          loadEventInformation();
+        });
         return;
       }
-      _loadSVEventInformation().then(function (found) {
-        $scope.svEvent = svEvent = found;
-        _init(svEvent);
-      });
-
+      loadEventInformation();
     })
 
   });

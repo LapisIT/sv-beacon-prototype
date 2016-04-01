@@ -23,6 +23,8 @@ angular.module('svBeaconPrototype')
 
         return deferred.promise;
       }
+      
+      
 
       return Events;
 

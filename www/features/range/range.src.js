@@ -4,7 +4,8 @@
  */
 angular.module('svBeaconPrototype')
 
-  .controller('RangeCtrl', function ($scope, $rootScope, $ionicModal, $ionicPopup, $timeout, $log, $ionicPlatform, $cordovaBeacon, $q, Validations, Signals, Ranges, Beacons, Events) {
+  .controller('RangeCtrl', function ($scope, $rootScope, $ionicModal, $ionicPopup, 
+                                     $timeout, $log, $ionicPlatform, $cordovaBeacon, $q, Validations, Signals, Ranges, Beacons, Events) {
 
     var brIdentifier = 'estimote',
       brNotifyEntryStateOnDisplay = true,
@@ -13,6 +14,15 @@ angular.module('svBeaconPrototype')
     $scope.ranging = false;
 
     $scope.rangedBeacons = [];
+
+    $scope.findColour = function(beacon) {
+      return $scope.find(beacon).colour;
+    }
+    $scope.find = function(beacon) {
+      var key = Beacons.toKey(beacon.uuid,beacon.major,beacon.minor);
+      return $scope.event.beacons[key];
+    }
+
 
     $scope.startRangingBeaconsInRegion = function _startRangingBeaconsInRegion() {
       _enableBluetooth().then(function () {
