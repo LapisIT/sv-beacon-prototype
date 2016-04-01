@@ -133,6 +133,7 @@ angular.module('svBeaconPrototype', [
 
       .state('app.home', {
         url: '/home',
+        cache:false,
         views: {
           'menuContent': {
             templateUrl: 'features/home/home.tpl.html',
