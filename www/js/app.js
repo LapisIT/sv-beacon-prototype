@@ -1,61 +1,61 @@
 window.sv = {};
-window.sv.isDebugMode = false;
+window.sv.isDebugMode = true;
 
-//window.sv.logs = (function () {
-//  var logs = [];
-//  if (window.console && console.log) {
-//    var oldInfo = console.info,
-//      oldLog = console.log,
-//      oldWarn = console.warn,
-//      oldError = console.error, maxLogLengths = 100;
-//
-//    function logging(msg, colour, csl, thisArg, arguments) {
-//      if (window.sv.isDebugMode) {
-//        if (logs.length > maxLogLengths) {
-//          window.clearLogs();
-//        }
-//
-//        logs.push('<div style="color: ' + colour + ';">' + (JSON.stringify(arguments)) + '</div>');
-//        csl.apply(thisArg, arguments);
-//        return;
-//      }
-//      if(!window.sv.isDebugMode && colour === 'red'){
-//        csl.apply(thisArg, arguments);
-//      }
-//    }
-//
-//    console.info = function (msg) {
-//      logging(msg, 'blue', oldInfo, this, arguments);
-//    };
-//    console.log = function (msg) {
-//      logging(msg, 'black', oldLog, this, arguments);
-//    };
-//    console.warn = function (msg) {
-//      logging(msg, '#ff6600', oldWarn, this, arguments);
-//    };
-//    console.error = function (msg) {
-//      logging(msg, 'red', oldError, this, arguments);
-//    };
-//
-//  }
-//
-//  window.hideLogs = function () {
-//    document.getElementById('logger').style.display = 'none';
-//    window.clearLogs();
-//  };
-//
-//  window.clearLogs = function () {
-//    window.sv.logs.splice(0, window.sv.logs.length);
-//    var logger = document.getElementById('logger');
-//    logger.innerHTML = '<button class="button button-balanced button-full button-highlight" ' +
-//      'onclick="hideLogs()">Hide logs </button> <button class="button button-assertive button-full"' +
-//      'onclick="clearLogs()">Clear logs </button> <br/> <br/>';
-//
-//  };
-//
-//  return logs;
-//})();
-//console.log('logs init? ', window.sv.logs);
+window.sv.logs = (function () {
+  var logs = [];
+  if (window.console && console.log) {
+    var oldInfo = console.info,
+      oldLog = console.log,
+      oldWarn = console.warn,
+      oldError = console.error, maxLogLengths = 100;
+
+    function logging(msg, colour, csl, thisArg, arguments) {
+      if (window.sv.isDebugMode) {
+        if (logs.length > maxLogLengths) {
+          window.clearLogs();
+        }
+
+        logs.push('<div style="color: ' + colour + ';">' + (JSON.stringify(arguments)) + '</div>');
+        csl.apply(thisArg, arguments);
+        return;
+      }
+      if(!window.sv.isDebugMode && colour === 'red'){
+        csl.apply(thisArg, arguments);
+      }
+    }
+
+    console.info = function (msg) {
+      logging(msg, 'blue', oldInfo, this, arguments);
+    };
+    console.log = function (msg) {
+      logging(msg, 'black', oldLog, this, arguments);
+    };
+    console.warn = function (msg) {
+      logging(msg, '#ff6600', oldWarn, this, arguments);
+    };
+    console.error = function (msg) {
+      logging(msg, 'red', oldError, this, arguments);
+    };
+
+  }
+
+  window.hideLogs = function () {
+    document.getElementById('logger').style.display = 'none';
+    window.clearLogs();
+  };
+
+  window.clearLogs = function () {
+    window.sv.logs.splice(0, window.sv.logs.length);
+    var logger = document.getElementById('logger');
+    logger.innerHTML = '<button class="button button-balanced button-full button-highlight" ' +
+      'onclick="hideLogs()">Hide logs </button> <button class="button button-assertive button-full"' +
+      'onclick="clearLogs()">Clear logs </button> <br/> <br/>';
+
+  };
+
+  return logs;
+})();
+console.log('logs init? ', window.sv.logs);
 
 // Ionic Starter App
 
