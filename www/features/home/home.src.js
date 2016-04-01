@@ -39,7 +39,7 @@ angular.module('svBeaconPrototype')
               template: svEvent.beacons[beacon.uuid + ':' + beacon.major + ':' + beacon.minor].proximity.near
             });
           }
-          if ((beacon.proximity === 'ProximityFar') && !isEmpty(sentNotifications[beacon.uuid + ':' + beacon.major + ':' + beacon.minor])) {
+          if ((beacon.proximity === 'ProximityFar')) {
             delete sentNotifications[beacon.uuid + ':' + beacon.major + ':' + beacon.minor];
           }
         })
@@ -55,6 +55,7 @@ angular.module('svBeaconPrototype')
       $scope.$on('$ionicView.beforeLeave', function _onIonicViewLeave(event, view) {
         $log.info('$ionicView.HomeCtrl beforeLeave', view);
         Monitors.stop(monitoringRegion);
+        Ranges.stop(monitoringRegion);
       });
     }
 
