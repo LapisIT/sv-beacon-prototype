@@ -19,12 +19,10 @@ angular.module('svBeaconPrototype')
             deferred.reject(errorObject);
             console.log("The read failed: " + errorObject.code);
           });
-        })
+        });
 
         return deferred.promise;
-      }
-      
-      
+      };
 
       return Events;
 

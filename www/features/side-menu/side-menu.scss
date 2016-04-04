@@ -45,6 +45,10 @@ ion-side-menu.menu {
     content: $debug-icon;
   }
 
+  .icon.whereabout:before {
+    content: $whereabout-icon;
+  }
+
   ion-item.species > a {
     height: 256px;
     &:before {

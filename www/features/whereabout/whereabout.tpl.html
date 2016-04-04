@@ -1,0 +1,25 @@
+<ion-view>
+  <ion-content>
+
+    <p class="hint-text">
+      <i class="icon ion-android-bulb"></i>
+      <text>
+        You can see your current location based on proximity to one of sv beacons.
+      </text>
+    </p>
+    <beacons ng-if="beacon" class="padding" style="display: block;">
+      <h4>You are here</h4>
+      <div class="card">
+        <div class="item item-divider" style="background-color: {{findColour(beacon)}}; color: #fff">
+          {{find(beacon).locationName}}
+        </div>
+        <div class="item item-text-wrap">
+          <p>UUID: {{beacon.uuid}}:{{beacon.major}}:{{beacon.minor}}</p>
+          <p>Proximity: {{beacon.proximity}} ({{beacon.accuracy}})</p>
+        </div>
+      </div>
+    </beacons>
+
+  </ion-content>
+
+</ion-view>

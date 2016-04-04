@@ -6,8 +6,14 @@
 angular.module('svBeaconPrototype').factory('Beacons',
   function ($rootScope, $cordovaBeacon, $log, Cordovas) {
     var toKey = function (uuid, major, minor) {
-      return uuid.toUpperCase() + ':' + major + ':' + minor;
-    }
+        return uuid.toUpperCase() + ':' + major + ':' + minor;
+      },
+      _PROXIMITY = {
+        IMMEDIATE: 'ProximityImmediate',
+        NEAR: 'ProximityNear',
+        FAR: 'ProximityFar',
+        UNKNOWN: 'ProximityUnknown'
+      };
 
     $rootScope.isBluetoothEnabled = false;
 
@@ -44,10 +50,16 @@ angular.module('svBeaconPrototype').factory('Beacons',
       $rootScope.isBluetoothEnabled = isBluetoothEnabled;
     });
 
+    function _find(key, svEvent) {
+      return svEvent.locations[key];
+    };
+
     return {
+      PROXIMITY: _PROXIMITY,
       createRegion: _createRegion,
       requestAlwaysAuthorization: _requestAlwaysAuthorization,
       isBluetoothEnabled: _isBluetoothEnabled,
-      toKey:toKey
+      toKey: toKey,
+      find: _find
     }
   });

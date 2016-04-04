@@ -17,10 +17,11 @@ angular.module('svBeaconPrototype')
 
     $scope.findColour = function (beacon) {
       return $scope.find(beacon).colour;
-    }
+    };
+
     $scope.find = function (beacon) {
       var key = Beacons.toKey(beacon.uuid, beacon.major, beacon.minor);
-      return $scope.event.beacons[key];
+      return Beacons.find(key, $scope.event);
     }
 
 
@@ -28,7 +29,7 @@ angular.module('svBeaconPrototype')
       var event = $scope.event;
       Beacons.requestAlwaysAuthorization();
       Beacons.createRegion(brIdentifier, event.id, null, null, brNotifyEntryStateOnDisplay).then(function (createdRegion) {
-        $log.info('HomeCtrl _startMonitoringForRegion()', createdRegion);
+        $log.info('RangeCtrl _startMonitoringForRegion()', createdRegion);
         rangedRegion = createdRegion;
         Ranges.start(createdRegion);
       });
@@ -78,7 +79,7 @@ angular.module('svBeaconPrototype')
       });
 
     Events.load().then(function (event) {
-      $log.info('HomeCtrl, got events information!', event);
+      $log.info('RangeCtrl, got events information!', event);
       event.notifications = true;
       $scope.event = event;
     });
