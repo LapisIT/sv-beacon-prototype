@@ -26,7 +26,11 @@ angular.module('svBeaconPrototype')
             if ($scope.showError) {
                 return;
             }
-            $rootScope.go('app.home');
+            MyDetails.save(myDetails).then(function (saved) {
+              $rootScope.go('app.home');
+            }, function (err) {
+              $scope.showError = true;
+            })
         };
 
     });
