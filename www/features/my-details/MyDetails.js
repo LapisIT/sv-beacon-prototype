@@ -2,7 +2,7 @@
 
 angular.module('svBeaconPrototype')
 	.factory('MyDetails',
-		function ($log, $q, $localStorage, Validations) {
+		function ($log, $q, $localStorage, Validations, Users) {
 			$log.info('MyDetails...');
 
 			var isDefined = Validations.isDefined,
@@ -28,7 +28,8 @@ angular.module('svBeaconPrototype')
 			}
 
 			return {
-				find: _find
+				find: _find,
+        save:Users.save
 			};
 
 		});
