@@ -13,7 +13,7 @@ angular.module('svBeaconPrototype')
       svEvent;
 
     $scope.ranging = false;
-    $scope.beacon = '';
+    $scope.location = '';
 
     $scope.findColour = function (beacon) {
       return $scope.find(beacon).colour;
@@ -42,8 +42,8 @@ angular.module('svBeaconPrototype')
 
     $scope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function (event, pluginResult) {
       $log.info('$cordovaBeacon:didRangeBeaconsInRegion', pluginResult);
-      Whereabouts.find(pluginResult.beacons).then(function (beacon) {
-        $scope.beacon = beacon;
+      Whereabouts.find(pluginResult.beacons).then(function (location) {
+        $scope.location = location;
       });
     });
 

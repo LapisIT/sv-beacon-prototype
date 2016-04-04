@@ -5,13 +5,12 @@
 angular.module('svBeaconPrototype')
   .factory('Whereabouts',
     function ($http, $q, $log, $timeout,
-              Validations, Firebases, DateUtil, MyDetails, Beacons, Events) {
-      var isDefined = Validations.isDefined, isEmpty = Validations.isEmpty, numberOfAttempts = 5, attempts = {},
-        timeout = 1000 * numberOfAttempts,
+              Validations, Firebases, DateUtil, MyDetails, Beacons, Events, Locations) {
+      var isDefined = Validations.isDefined, isEmpty = Validations.isEmpty,
         path = 'whereabouts',
-        whereabouts = function () {
+        whereabouts = function (childPath) {
           return Firebases.rootRef().then(function (rootRef) {
-            return rootRef.child(path);
+            return rootRef.child(path + '/' + childPath);
           })
         };
 
@@ -27,71 +26,45 @@ angular.module('svBeaconPrototype')
         return 0;
       }
 
-      function _filterUnknowns(beacons) {
+      function _removeUnknowns(beacons) {
         return beacons.filter(function (beacon) {
           return beacon.accuracy !== -1;
         });
       }
 
       function _find(beacons) {
-        var deferred = $q.defer(), closestBeacon,
-          key;
-        beacons = _filterUnknowns(beacons);
-
-        if(beacons.length === 0){
-          deferred.reject();
-        }
+        var closestBeacon, key;
+        beacons = _removeUnknowns(beacons);
 
         beacons.sort(_sortByProximity);
+
         closestBeacon = beacons[0];
         key = Beacons.toKey(closestBeacon.uuid, closestBeacon.major, closestBeacon.minor);
 
-        _evaluateProximity(closestBeacon, key);
+        return _evaluateProximity(closestBeacon, key);
 
-        if (attempts[key] >= numberOfAttempts) {
-          _enter(closestBeacon.uuid, closestBeacon.major, closestBeacon.minor, closestBeacon.proximity, closestBeacon.accuracy);
-          deferred.resolve(closestBeacon);
-        } else {
-          $timeout(function () {
-            _exit(closestBeacon.uuid, closestBeacon.major, closestBeacon.minor, closestBeacon.proximity, closestBeacon.accuracy);
-            deferred.reject(closestBeacon);
-          }, timeout);
-        }
-        return deferred.promise;
       }
 
-      function _attempt(attempts, key) {
-        if (isEmpty(attempts[key])) {
-          attempts[key] = 1;
-        } else {
-          attempts[key]++;
-        }
-      }
-
-      function _evaluateProximity(beacon, key) {
-        Events.load().then(function (locations) {
-          if (locations[key].settings.whereabouts.proximity === beacon.proximity) {
-            _attempt(attempts, key);
-          }
+      function _evaluateProximity(beacon) {
+        return Events.load().then(function (event) {
+          return Locations.isIn(event.locations, beacon).then(function(location){
+            if(isDefined(location)){
+              _enter(location);
+            }
+            return $q.when(location);
+          })
         })
       }
 
-      function _send(uuid, major, minor, type, proximity, accuracy) {
+      function _enter(location) {
         var whereabout = {
-          receivedAt: DateUtil.now(),
-          type: type,
-          beacon: {
-            uuid: uuid,
-            major: major,
-            minor: minor,
-            proximity: isEmpty(proximity) ? '' : proximity,
-            accuracy: isEmpty(accuracy) ? '' : accuracy
-          }
+          receivedAt: DateUtil.now()
         };
 
         MyDetails.find().then(function (found) {
+          var path = location.locationName + '/' + found.name.replace(/ /g, '');
           whereabout.user = found;
-          whereabouts().then(function (whereabouts) {
+          whereabouts(path).then(function (whereabouts) {
             var newRef = whereabouts.set(whereabout, function (error) {
               if (error) {
                 $log.info("could not be saved.", error);
@@ -105,14 +78,6 @@ angular.module('svBeaconPrototype')
           });
         })
 
-      }
-
-      function _enter(uuid, major, minor, proximity, accuracy) {
-        return _send(uuid, major, minor, 'ENTER', proximity, accuracy)
-      }
-
-      function _exit(uuid, major, minor, proximity, accuracy) {
-        return _send(uuid, major, minor, 'EXIT', proximity, accuracy)
       }
 
       return {
