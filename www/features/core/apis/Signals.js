@@ -5,7 +5,8 @@
 angular.module('svBeaconPrototype')
   .factory('Signals',
     function ($http, $q, $log,
-              Validations, Firebases, DateUtil, MyDetails) {
+              Validations, Firebases, DateUtil, MyDetails,
+              $firebaseArray) {
       var Signals = {}, isDefined = Validations.isDefined, isEmpty = Validations.isEmpty;
       var path = 'signals', deferred;
       var signals = function () {
@@ -38,8 +39,12 @@ angular.module('svBeaconPrototype')
               }
             });
             $log.info("newRef ", newRef);
+          }, function(err) {
+
           });
         })
+
+
 
       };
 

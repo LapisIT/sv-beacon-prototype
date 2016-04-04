@@ -79,7 +79,8 @@ angular.module('svBeaconPrototype', [
     'svBeaconPrototype.googleGeocode',
     'svBeaconPrototype.validations',
     'svBeaconPrototype.location',
-    'svBeaconPrototype.googleAnalytics'
+    'svBeaconPrototype.googleAnalytics',
+    'firebase'
   ])
 
   .run(function ($log, $rootScope, $window, Router, Cordovas) {
