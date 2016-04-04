@@ -81,14 +81,13 @@ angular.module('svBeaconPrototype')
 
       _registerNgEvents();
 
-      Beacons.requestAlwaysAuthorization().then(function () {
-        _monitorSVEvent(svEvent);
-      });
-
       Beacons.createRegion(
         monitoringRegionName, svEvent.id, null, null, brNotifyEntryStateOnDisplay
       ).then(function (createdRegion) {
         monitoringRegion = createdRegion;
+        Beacons.requestAlwaysAuthorization().then(function () {
+          _monitorSVEvent(svEvent);
+        });
       })
 
     }

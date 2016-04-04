@@ -4,7 +4,7 @@
  */
 angular.module('svBeaconPrototype')
 
-  .controller('RangeCtrl', function ($scope, $rootScope, $ionicModal, $ionicPopup, 
+  .controller('RangeCtrl', function ($scope, $rootScope, $ionicModal, $ionicPopup,
                                      $timeout, $log, $ionicPlatform, $cordovaBeacon, $q, Validations, Signals, Ranges, Beacons, Events) {
 
     var brIdentifier = 'estimote',
@@ -15,26 +15,24 @@ angular.module('svBeaconPrototype')
 
     $scope.rangedBeacons = [];
 
-    $scope.findColour = function(beacon) {
+    $scope.findColour = function (beacon) {
       return $scope.find(beacon).colour;
     }
-    $scope.find = function(beacon) {
-      var key = Beacons.toKey(beacon.uuid,beacon.major,beacon.minor);
+    $scope.find = function (beacon) {
+      var key = Beacons.toKey(beacon.uuid, beacon.major, beacon.minor);
       return $scope.event.beacons[key];
     }
 
 
     $scope.startRangingBeaconsInRegion = function _startRangingBeaconsInRegion() {
-      _enableBluetooth().then(function () {
-        var event = $scope.event;
-        Beacons.requestAlwaysAuthorization();
-        Beacons.createRegion(brIdentifier, event.id, null, null, brNotifyEntryStateOnDisplay).then(function (createdRegion) {
-          $log.info('HomeCtrl _startMonitoringForRegion()', createdRegion);
-          rangedRegion = createdRegion;
-          Ranges.start(createdRegion);
-        });
-        $scope.ranging = true;
+      var event = $scope.event;
+      Beacons.requestAlwaysAuthorization();
+      Beacons.createRegion(brIdentifier, event.id, null, null, brNotifyEntryStateOnDisplay).then(function (createdRegion) {
+        $log.info('HomeCtrl _startMonitoringForRegion()', createdRegion);
+        rangedRegion = createdRegion;
+        Ranges.start(createdRegion);
       });
+      $scope.ranging = true;
     };
 
     $scope.stopRangingBeaconsInRegion = function () {
