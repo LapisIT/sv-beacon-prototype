@@ -158,6 +158,7 @@ angular.module('svBeaconPrototype', [
 
       .state('app.whereabout', {
         url: '/whereabout',
+        cache:false,
         views: {
           'menuContent': {
             templateUrl: 'features/whereabout/whereabout.tpl.html',
