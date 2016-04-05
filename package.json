@@ -1,6 +1,6 @@
 {
   "name": "sv-beacon-prototype",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "sv-beacon-prototype: An Ionic project",
   "dependencies": {
     "gulp": "^3.5.6",
