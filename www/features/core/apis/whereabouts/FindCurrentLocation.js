@@ -7,7 +7,7 @@ angular.module('svBeaconPrototype')
     function ($http, $q, $log, $timeout,
               Validations, Firebases, DateUtil, MyDetails,
               Beacons, Events, Locations,
-              SortByProximity, RemoveUnknowns) {
+              SortByProximity, RemoveUnknowns, EvaluateProximity) {
       var isDefined = Validations.isDefined, isEmpty = Validations.isEmpty,
         path = 'whereabouts',
         whereabouts = function (childPath) {
@@ -17,6 +17,8 @@ angular.module('svBeaconPrototype')
         };
       var _sortByProximity = SortByProximity.sort;
       var _removeUnknowns = RemoveUnknowns.remove;
+      var _evaluateProximity = EvaluateProximity.evaluate;
+
       // function _sortByProximity(a, b) {
       //
       //   if (a.accuracy < b.accuracy) {
@@ -48,40 +50,40 @@ angular.module('svBeaconPrototype')
 
       }
 
-      function _evaluateProximity(beacon) {
-        return Events.load().then(function (event) {
-          return Locations.isIn(event.locations, beacon).then(function(location){
-            if(isDefined(location)){
-              _enter(location);
-            }
-            return $q.when(location);
-          })
-        })
-      }
-
-      function _enter(location) {
-        var whereabout = {
-          receivedAt: DateUtil.now()
-        };
-
-        MyDetails.find().then(function (found) {
-          var path = location.locationName + '/users/' + found.name.replace(/ /g, '');
-          whereabout.user = found;
-          whereabouts(path).then(function (whereabouts) {
-            var newRef = whereabouts.set(whereabout, function (error) {
-              if (error) {
-                $log.info("could not be saved.", error);
-              } else {
-                $log.info("saved successfully.");
-              }
-            });
-            $log.info("newRef ", newRef);
-          }, function (err) {
-
-          });
-        })
-
-      }
+      // function _evaluateProximity(beacon) {
+      //   return Events.load().then(function (event) {
+      //     return Locations.isIn(event.locations, beacon).then(function(location){
+      //       if(isDefined(location)){
+      //         _enter(location);
+      //       }
+      //       return $q.when(location);
+      //     })
+      //   })
+      // }
+      //
+      // function _enter(location) {
+      //   var whereabout = {
+      //     receivedAt: DateUtil.now()
+      //   };
+      //
+      //   MyDetails.find().then(function (found) {
+      //     var path = location.locationName + '/users/' + found.name.replace(/ /g, '');
+      //     whereabout.user = found;
+      //     whereabouts(path).then(function (whereabouts) {
+      //       var newRef = whereabouts.set(whereabout, function (error) {
+      //         if (error) {
+      //           $log.info("could not be saved.", error);
+      //         } else {
+      //           $log.info("saved successfully.");
+      //         }
+      //       });
+      //       $log.info("newRef ", newRef);
+      //     }, function (err) {
+      //
+      //     });
+      //   })
+      //
+      // }
 
       return {
         find: _findCurrentLocation
