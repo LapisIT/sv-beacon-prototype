@@ -62,7 +62,7 @@ angular.module('svBeaconPrototype')
         };
 
         MyDetails.find().then(function (found) {
-          var path = location.locationName + '/' + found.name.replace(/ /g, '');
+          var path = location.locationName + '/users/' + found.name.replace(/ /g, '');
           whereabout.user = found;
           whereabouts(path).then(function (whereabouts) {
             var newRef = whereabouts.set(whereabout, function (error) {

@@ -54,7 +54,7 @@ angular.module('svBeaconPrototype').factory('Locations',
     function _clearFromLocations(filteredLocations) {
       MyDetails.find().then(function (found) {
         angular.forEach(filteredLocations, function (location, key) {
-          var path = location.locationName + '/' + found.name.replace(/ /g, '');
+          var path = location.locationName + '/users/' + found.name.replace(/ /g, '');
           whereabouts(path).then(function (whereabouts) {
             var newRef = whereabouts.remove(function (error) {
               if (error) {
