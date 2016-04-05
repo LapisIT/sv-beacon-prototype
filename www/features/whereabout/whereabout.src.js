@@ -12,7 +12,6 @@ angular.module('svBeaconPrototype')
       rangedRegion,
       svEvent;
 
-    $scope.ranging = false;
     $scope.location = '';
 
     $scope.findColour = function (beacon) {
@@ -32,12 +31,10 @@ angular.module('svBeaconPrototype')
         rangedRegion = createdRegion;
         Ranges.start(createdRegion);
       });
-      $scope.ranging = true;
     };
 
     function _stopRangingBeaconsInRegion(rangedRegion) {
       Ranges.stop(rangedRegion);
-      $scope.ranging = false;
     };
 
     $scope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function (event, pluginResult) {
@@ -52,9 +49,7 @@ angular.module('svBeaconPrototype')
     $scope.$on('$ionicView.beforeLeave',
       function (event, view) {
         $log.info('$ionicView.EditReportSoundCtrl beforeLeave', view);
-        if ($scope.ranging) {
-          _stopRangingBeaconsInRegion(rangedRegion);
-        }
+        _stopRangingBeaconsInRegion(rangedRegion);
       });
 
     Events.load().then(function (event) {
