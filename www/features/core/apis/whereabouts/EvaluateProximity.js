@@ -3,9 +3,9 @@
  * @since 29/03/2016
  */
 angular.module('svBeaconPrototype')
-  .factory('Whereabouts',
-    function ($http, $q, $log, $timeout,
-              Validations, Firebases, DateUtil, MyDetails, Beacons, Events, Locations) {
+  .factory('EvaluateProximity',
+    function ($log, $q, Validations, Firebases, DateUtil, MyDetails,
+              Beacons, Events, Locations) {
       var isDefined = Validations.isDefined, isEmpty = Validations.isEmpty,
         path = 'whereabouts',
         whereabouts = function (childPath) {
@@ -13,37 +13,6 @@ angular.module('svBeaconPrototype')
             return rootRef.child(path + '/' + childPath);
           })
         };
-
-      function _sortByProximity(a, b) {
-
-        if (a.accuracy < b.accuracy) {
-          return -1;
-        }
-        if (a.accuracy > b.accuracy) {
-          return 1;
-        }
-
-        return 0;
-      }
-
-      function _removeUnknowns(beacons) {
-        return beacons.filter(function (beacon) {
-          return beacon.accuracy !== -1;
-        });
-      }
-
-      function _find(beacons) {
-        var closestBeacon, key;
-        beacons = _removeUnknowns(beacons);
-
-        beacons.sort(_sortByProximity);
-
-        closestBeacon = beacons[0];
-        key = Beacons.toKey(closestBeacon.uuid, closestBeacon.major, closestBeacon.minor);
-
-        return _evaluateProximity(closestBeacon, key);
-
-      }
 
       function _evaluateProximity(beacon) {
         return Events.load().then(function (event) {
@@ -81,7 +50,7 @@ angular.module('svBeaconPrototype')
       }
 
       return {
-        find: _find
+        evaluate: _evaluateProximity
       };
 
 
