@@ -3,9 +3,11 @@
  * @since 29/03/2016
  */
 angular.module('svBeaconPrototype')
-  .factory('Whereabouts',
+  .factory('FindCurrentLocation',
     function ($http, $q, $log, $timeout,
-              Validations, Firebases, DateUtil, MyDetails, Beacons, Events, Locations) {
+              Validations, Firebases, DateUtil, MyDetails,
+              Beacons, Events, Locations,
+              SortByProximity, RemoveUnknowns) {
       var isDefined = Validations.isDefined, isEmpty = Validations.isEmpty,
         path = 'whereabouts',
         whereabouts = function (childPath) {
@@ -13,26 +15,27 @@ angular.module('svBeaconPrototype')
             return rootRef.child(path + '/' + childPath);
           })
         };
+      var _sortByProximity = SortByProximity.sort;
+      var _removeUnknowns = RemoveUnknowns.remove;
+      // function _sortByProximity(a, b) {
+      //
+      //   if (a.accuracy < b.accuracy) {
+      //     return -1;
+      //   }
+      //   if (a.accuracy > b.accuracy) {
+      //     return 1;
+      //   }
+      //
+      //   return 0;
+      // }
 
-      function _sortByProximity(a, b) {
+      // function _removeUnknowns(beacons) {
+      //   return beacons.filter(function (beacon) {
+      //     return beacon.accuracy !== -1;
+      //   });
+      // }
 
-        if (a.accuracy < b.accuracy) {
-          return -1;
-        }
-        if (a.accuracy > b.accuracy) {
-          return 1;
-        }
-
-        return 0;
-      }
-
-      function _removeUnknowns(beacons) {
-        return beacons.filter(function (beacon) {
-          return beacon.accuracy !== -1;
-        });
-      }
-
-      function _find(beacons) {
+      function _findCurrentLocation(beacons) {
         var closestBeacon, key;
         beacons = _removeUnknowns(beacons);
 
@@ -81,7 +84,7 @@ angular.module('svBeaconPrototype')
       }
 
       return {
-        find: _find
+        find: _findCurrentLocation
       };
 
 
