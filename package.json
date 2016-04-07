@@ -24,7 +24,8 @@
     "build-web": "grunt ",
     "bad": "ionic run android --device",
     "badl": "ionic run android --device --livereload",
-    "rsc": "ionic resources"
+    "rsc": "ionic resources",
+    "fdep":"firebase deploy"
   },
   "cordovaPlugins": [
     "cordova-plugin-device@1.1.1",
