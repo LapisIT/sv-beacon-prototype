@@ -4,9 +4,9 @@
  */
 angular.module('svBeaconPrototype')
   .factory('Whereabouts',
-    function ($log, FindCurrentLocation) {
+    function ($log, UpdateCurrentLocation) {
       return {
-        find: FindCurrentLocation.find
+        update: UpdateCurrentLocation.update
       };
 
     });

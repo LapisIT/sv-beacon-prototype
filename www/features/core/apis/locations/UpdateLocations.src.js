@@ -3,15 +3,19 @@
  * @since 4/04/2016
  */
 
-angular.module('svBeaconPrototype').factory('ExistFromLocation',
-  function ($rootScope, $cordovaBeacon, $log, $q, $timeout,
-            Cordovas, Beacons, MyDetails, Validations, Firebases,
+angular.module('svBeaconPrototype').factory('UpdateLocations',
+  function ($log, $q,
+            Beacons, MyDetails, Validations, Firebases,
+            ProximityCriteria,
             FirebaseEntities) {
-    var toKey = function (uuid, major, minor) {
-        return uuid.toUpperCase() + ':' + major + ':' + minor;
-      }, signals = [],
-      _proximities = ['ProximityImmediate', 'ProximityNear', 'ProximityFar'],
-      path = 'whereabouts',
+    var signals = [],
+      // proximityCriteria = ['ProximityImmediate', 'ProximityNear', 'ProximityFar'],
+      // findProximityCriterionIndex = function(proximityCriterion) {
+      //   return proximityCriteria.indexOf(proximityCriterion);
+      // },
+      // fincAcceptableProximities = function (proximityCriterion) {
+      //   return proximityCriteria.slice(0, findProximityCriterionIndex(proximityCriterion) + 1);
+      // },
       whereabouts = function (childPath) {
         return Firebases.childRef(childPath);
       };
@@ -20,24 +24,20 @@ angular.module('svBeaconPrototype').factory('ExistFromLocation',
       return locations[key].settings.whereabouts;
     }
 
-    function _isIn(locations, beacon) {
+    function update(locations, beacon) {
       var key = Beacons.toKey(beacon.uuid, beacon.major, beacon.minor),
         whereaboutsSettings = _whereaboutsSettings(locations, key),
-        proximityCriteria = whereaboutsSettings.proximity,
-        numberOfTimesToDecideCriteria = whereaboutsSettings.numberOfTimesToDecide,
+        proximityCriterion = whereaboutsSettings.proximity,
+        numberOfTimesToDecideCriterion = whereaboutsSettings.numberOfTimesToDecide,
         proximityActual = beacon.proximity,
-        proximityCriteriaIndex = _proximities.indexOf(proximityCriteria),
-        reducedProximities,
+        acceptableProximities = ProximityCriteria.fincAcceptableProximities(proximityCriterion),
         location,
         locationsToClean = angular.copy(locations);
 
-      reducedProximities = _proximities.slice(0, proximityCriteriaIndex + 1);
-
-      return _isCloseEnough(reducedProximities, proximityActual).then(function () {
-
+      return ProximityCriteria.isWithinCriteria(acceptableProximities, proximityActual).then(function () {
         signals.push(key);
 
-        return _isConsistentSignal(numberOfTimesToDecideCriteria).then(function () {
+        return _isConsistentSignal(numberOfTimesToDecideCriterion).then(function () {
           location = locations[key];
           delete locationsToClean[key];
           _clearFromLocations(locationsToClean);
@@ -58,9 +58,9 @@ angular.module('svBeaconPrototype').factory('ExistFromLocation',
           whereabouts(path).then(function (whereabouts) {
             var newRef = whereabouts.remove(function (error) {
               if (error) {
-                $log.error("ExistFromLocation, remove from location failed " + location.locationName, error);
+                $log.error("FindLocation, remove from location failed " + location.locationName, error);
               } else {
-                $log.info("ExistFromLocation, removed from location successfully.", location.locationName);
+                $log.info("FindLocation, removed from location successfully.", location.locationName);
               }
             })
           });
@@ -86,15 +86,15 @@ angular.module('svBeaconPrototype').factory('ExistFromLocation',
       return isConsistent;
     }
 
-    function _isCloseEnough(proximities, proximityActual) {
-      var deferred = $q.defer();
-      if (proximities.indexOf(proximityActual) >= 0) {
-        deferred.resolve(true);
-      } else {
-        deferred.reject(false);
-      }
-      return deferred.promise;
-    }
+    // function _isCloseEnough(proximities, proximityActual) {
+    //   var deferred = $q.defer();
+    //   if (proximities.indexOf(proximityActual) >= 0) {
+    //     deferred.resolve(true);
+    //   } else {
+    //     deferred.reject(false);
+    //   }
+    //   return deferred.promise;
+    // }
 
     function _isConsistentSignal(numberOfTimesToDecide) {
       var deferred = $q.defer();
@@ -107,7 +107,6 @@ angular.module('svBeaconPrototype').factory('ExistFromLocation',
     }
 
     return {
-      isIn: _isIn,
-      whereaboutsSettings: _whereaboutsSettings
+      update: update
     }
   });

@@ -16,7 +16,7 @@ angular.module('svBeaconPrototype')
 
       function _evaluateProximity(beacon) {
         return Events.load().then(function (event) {
-          return Locations.isIn(event.locations, beacon).then(function(location){
+          return Locations.update(event.locations, beacon).then(function(location){
             if(isDefined(location)){
               _enter(location);
             }

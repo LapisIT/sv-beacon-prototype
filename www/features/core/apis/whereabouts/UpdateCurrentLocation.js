@@ -3,7 +3,7 @@
  * @since 29/03/2016
  */
 angular.module('svBeaconPrototype')
-  .factory('FindCurrentLocation',
+  .factory('UpdateCurrentLocation',
     function ($http, $q, $log,
               Validations,
               Beacons,
@@ -13,7 +13,7 @@ angular.module('svBeaconPrototype')
       var _removeUnknowns = RemoveUnknowns.remove;
       var _evaluateProximity = EvaluateProximity.evaluate;
 
-      function _findCurrentLocation(beacons) {
+      function _updateCurrentLocation(beacons) {
         var closestBeacon, key;
         beacons = _removeUnknowns(beacons);
 
@@ -26,7 +26,7 @@ angular.module('svBeaconPrototype')
       }
 
       return {
-        find: _findCurrentLocation
+        update: _updateCurrentLocation
       };
 
 
