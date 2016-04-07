@@ -39,7 +39,7 @@ angular.module('svBeaconPrototype')
 
     $scope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function (event, pluginResult) {
       $log.info('$cordovaBeacon:didRangeBeaconsInRegion', pluginResult);
-      Whereabouts.find(pluginResult.beacons).then(function (location) {
+      Whereabouts.update(pluginResult.beacons).then(function (location) {
         $scope.location = location;
       }, function (location) {
         $scope.location = '';
