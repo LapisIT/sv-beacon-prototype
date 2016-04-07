@@ -3,17 +3,17 @@
  * @since 4/04/2016
  */
 
-angular.module('svBeaconPrototype').factory('Locations',
-  function ($rootScope, $cordovaBeacon, $log, $q, $timeout, Cordovas, Beacons, MyDetails, Validations, Firebases) {
+angular.module('svBeaconPrototype').factory('ExistFromLocation',
+  function ($rootScope, $cordovaBeacon, $log, $q, $timeout,
+            Cordovas, Beacons, MyDetails, Validations, Firebases,
+            FirebaseEntities) {
     var toKey = function (uuid, major, minor) {
         return uuid.toUpperCase() + ':' + major + ':' + minor;
       }, signals = [],
       _proximities = ['ProximityImmediate', 'ProximityNear', 'ProximityFar'],
       path = 'whereabouts',
       whereabouts = function (childPath) {
-        return Firebases.rootRef().then(function (rootRef) {
-          return rootRef.child(path + '/' + childPath);
-        })
+        return Firebases.childRef(childPath);
       };
 
     function _whereaboutsSettings(locations, key) {
@@ -58,9 +58,9 @@ angular.module('svBeaconPrototype').factory('Locations',
           whereabouts(path).then(function (whereabouts) {
             var newRef = whereabouts.remove(function (error) {
               if (error) {
-                $log.error("Locations, remove from location failed " + location.locationName, error);
+                $log.error("ExistFromLocation, remove from location failed " + location.locationName, error);
               } else {
-                $log.info("Locations, removed from location successfully.", location.locationName);
+                $log.info("ExistFromLocation, removed from location successfully.", location.locationName);
               }
             })
           });
