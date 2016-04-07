@@ -20,10 +20,32 @@ angular.module('svBeaconPrototype').factory('ProximityCriteria',
           deferred.reject(false);
         }
         return deferred.promise;
+      },
+      _isLastNSignalsEqual = function (signals, numberOfTimesToDecide) {
+        var lastNSignals = signals.slice(-1 * numberOfTimesToDecide),
+          lastValue = signals[signals.length - 1],
+          isConsistent = true;
+        lastNSignals.forEach(function (value) {
+          if (lastValue !== value) {
+            isConsistent = false;
+          }
+        });
+        return isConsistent;
+      },
+      _consistentSignals = function (signals, numberOfTimesToDecide) {
+      var deferred = $q.defer();
+      if (_isLastNSignalsEqual(signals, numberOfTimesToDecide)) {
+        deferred.resolve(true);
+      } else {
+        deferred.reject(false);
       }
+      return deferred.promise;
+    }
+
 
     return {
       fincAcceptableProximities: fincAcceptableProximities,
-      isWithinCriteria: isWithinCriteria
+      isWithinCriteria: isWithinCriteria,
+      consistentSignals:_consistentSignals
     }
   });

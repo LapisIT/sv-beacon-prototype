@@ -4,29 +4,53 @@
  */
 angular.module('svBeaconPrototype')
   .factory('UpdateCurrentLocation',
-    function ($http, $q, $log,
-              Validations,
-              Beacons,
-              SortByProximity, RemoveUnknowns, EvaluateProximity) {
-      var isDefined = Validations.isDefined, isEmpty = Validations.isEmpty;
-      var _sortByProximity = SortByProximity.sort;
-      var _removeUnknowns = RemoveUnknowns.remove;
-      var _evaluateProximity = EvaluateProximity.evaluate;
+    function ($log, $q, Validations, Firebases, DateUtil, MyDetails,
+              Beacons, Events, Locations, FirebaseEntities) {
+      var isDefined = Validations.isDefined, isEmpty = Validations.isEmpty,
+        path = FirebaseEntities.pahts().whereabouts,
+        whereabouts = function (childPath) {
+          return Firebases.rootRef().then(function (rootRef) {
+            return rootRef.child(path + '/' + childPath);
+          })
+        };
 
-      function _updateCurrentLocation(beacons) {
-        var closestBeacon, key;
-        beacons = _removeUnknowns(beacons);
+      function _update(beacon) {
+        return Events.load().then(function (event) {
+          return Locations.update(event.locations, beacon).then(function(location){
+            if(isDefined(location)){
+              _enter(location);
+            }
+            return $q.when(location);
+          })
+        })
+      }
 
-        beacons.sort(_sortByProximity);
+      function _enter(location) {
+        var whereabout = {
+          receivedAt: DateUtil.now()
+        };
 
-        closestBeacon = beacons[0];
-        key = Beacons.toKey(closestBeacon.uuid, closestBeacon.major, closestBeacon.minor);
+        MyDetails.find().then(function (found) {
+          var path = location.locationName + '/users/' + found.name.replace(/ /g, '');
+          whereabout.user = found;
+          whereabouts(path).then(function (whereabouts) {
+            var newRef = whereabouts.set(whereabout, function (error) {
+              if (error) {
+                $log.info("could not be saved.", error);
+              } else {
+                $log.info("saved successfully.");
+              }
+            });
+            $log.info("newRef ", newRef);
+          }, function (err) {
 
-        return _evaluateProximity(closestBeacon, key);
+          });
+        })
+
       }
 
       return {
-        update: _updateCurrentLocation
+        update: _update
       };
 
 

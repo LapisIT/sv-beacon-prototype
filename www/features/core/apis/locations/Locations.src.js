@@ -6,11 +6,7 @@
 angular.module('svBeaconPrototype').factory('Locations',
   function ($log, Validations,
             UpdateLocations) {
-    function _whereaboutsSettings(locations, key) {
-      return locations[key].settings.whereabouts;
-    }
     return {
-      update: UpdateLocations.update,
-      whereaboutsSettings: _whereaboutsSettings
+      update: UpdateLocations.update
     }
   });

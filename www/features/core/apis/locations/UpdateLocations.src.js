@@ -6,7 +6,7 @@
 angular.module('svBeaconPrototype').factory('UpdateLocations',
   function ($log, $q,
             Beacons, MyDetails, Validations, Firebases,
-            ProximityCriteria,
+            ProximityCriteria, ExitFromLocations,
             FirebaseEntities) {
     var signals = [],
       // proximityCriteria = ['ProximityImmediate', 'ProximityNear', 'ProximityFar'],
@@ -37,10 +37,10 @@ angular.module('svBeaconPrototype').factory('UpdateLocations',
       return ProximityCriteria.isWithinCriteria(acceptableProximities, proximityActual).then(function () {
         signals.push(key);
 
-        return _isConsistentSignal(numberOfTimesToDecideCriterion).then(function () {
+        return ProximityCriteria.consistentSignals(signals, numberOfTimesToDecideCriterion).then(function () {
           location = locations[key];
           delete locationsToClean[key];
-          _clearFromLocations(locationsToClean);
+          ExitFromLocations.exit(locationsToClean);
           return $q.when(location);
         }, function () {
           return _clearSignals(locations);
@@ -70,40 +70,8 @@ angular.module('svBeaconPrototype').factory('UpdateLocations',
 
     function _clearSignals(locations) {
       signals = [];
-      _clearFromLocations(locations);
+      ExitFromLocations.exit(locations);
       return $q.reject();
-    }
-
-    function _isLastNSignalsEqual(numberOfTimesToDecide) {
-      var lastNSignals = signals.slice(-1 * numberOfTimesToDecide),
-        lastValue = signals[signals.length - 1],
-        isConsistent = true;
-      lastNSignals.forEach(function (value) {
-        if (lastValue !== value) {
-          isConsistent = false;
-        }
-      });
-      return isConsistent;
-    }
-
-    // function _isCloseEnough(proximities, proximityActual) {
-    //   var deferred = $q.defer();
-    //   if (proximities.indexOf(proximityActual) >= 0) {
-    //     deferred.resolve(true);
-    //   } else {
-    //     deferred.reject(false);
-    //   }
-    //   return deferred.promise;
-    // }
-
-    function _isConsistentSignal(numberOfTimesToDecide) {
-      var deferred = $q.defer();
-      if (_isLastNSignalsEqual(numberOfTimesToDecide)) {
-        deferred.resolve(true);
-      } else {
-        deferred.reject(false);
-      }
-      return deferred.promise;
     }
 
     return {
