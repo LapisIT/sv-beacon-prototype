@@ -9,13 +9,6 @@ angular.module('svBeaconPrototype').factory('UpdateLocations',
             ProximityCriteria, ExitFromLocations,
             FirebaseEntities) {
     var signals = [],
-      // proximityCriteria = ['ProximityImmediate', 'ProximityNear', 'ProximityFar'],
-      // findProximityCriterionIndex = function(proximityCriterion) {
-      //   return proximityCriteria.indexOf(proximityCriterion);
-      // },
-      // fincAcceptableProximities = function (proximityCriterion) {
-      //   return proximityCriteria.slice(0, findProximityCriterionIndex(proximityCriterion) + 1);
-      // },
       whereabouts = function (childPath) {
         return Firebases.childRef(childPath);
       };
@@ -49,23 +42,6 @@ angular.module('svBeaconPrototype').factory('UpdateLocations',
       }, function () {
         return _clearSignals(locations);
       });
-    }
-
-    function _clearFromLocations(filteredLocations) {
-      MyDetails.find().then(function (found) {
-        angular.forEach(filteredLocations, function (location, key) {
-          var path = location.locationName + '/users/' + found.name.replace(/ /g, '');
-          whereabouts(path).then(function (whereabouts) {
-            var newRef = whereabouts.remove(function (error) {
-              if (error) {
-                $log.error("FindLocation, remove from location failed " + location.locationName, error);
-              } else {
-                $log.info("FindLocation, removed from location successfully.", location.locationName);
-              }
-            })
-          });
-        })
-      })
     }
 
     function _clearSignals(locations) {

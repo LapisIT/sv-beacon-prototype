@@ -9,9 +9,9 @@ angular.module('svBeaconPrototype')
 				isEmpty = Validations.isEmpty,
 				storage = $localStorage.$default({
 					myDetails: {
-						name: '',
-						phone: '',
-						email: ''
+						name: 'HG',
+						phone: '0123456789',
+						email: 'h@sv.com'
 					}
 				});
 
