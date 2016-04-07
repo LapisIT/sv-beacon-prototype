@@ -32,8 +32,8 @@ angular.module('svBeaconPrototype')
           delete transformed.rssi;
           Signals.send(beacon.uuid, beacon.major, beacon.minor, 'RANGE', beacon.proximity, beacon.accuracy);
           var key = Beacons.toKey(beacon.uuid,beacon.major,beacon.minor),
-            locationName = svEvent.beacons[key].locationName,
-            proximity = svEvent.beacons[key].proximity;
+            locationName = svEvent.locations[key].locationName,
+            proximity = svEvent.locations[key].proximity;
           $log.info('$cordovaBeacon:didRangeBeaconsInRegion ProximityNear', locationName);
           if ((beacon.proximity === 'ProximityNear' || beacon.proximity === 'ProximityImmediate')
             && isEmpty(sentNotifications[key])) {
