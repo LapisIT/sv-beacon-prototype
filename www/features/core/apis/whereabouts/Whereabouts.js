@@ -13,6 +13,7 @@ angular.module('svBeaconPrototype')
         beacons = RemoveUnknowns.remove(beacons);
         beacons.sort(SortByProximity.sort);
         closestBeacon = beacons[0];
+        //do nothing if there is no beacon signal
         if(!isDefined(closestBeacon)) {
           return $q.when(undefined);
         }
