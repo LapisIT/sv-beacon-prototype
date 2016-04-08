@@ -5,23 +5,28 @@
 angular.module('svBeaconPrototype')
   .factory('Whereabouts',
     function ($log, $q, Validations, Beacons,
-              SortByProximity, RemoveUnknowns, UpdateCurrentLocation) {
+              SortByProximity, RemoveUnknowns, UpdateCurrentLocation, ExitFromLocations) {
       var isDefined = Validations.isDefined, isEmpty = Validations.isEmpty
 
-      function _updateCurrentLocation(beacons) {
+      function _updateCurrentLocation(locations, beacons) {
         var closestBeacon;
-        beacons = RemoveUnknowns.remove(beacons);
+        beacons = RemoveUnknowns.remove(locations, beacons);
+        $log.info('_updateCurrentLocation any beacons to update? ', beacons.length);
         beacons.sort(SortByProximity.sort);
         closestBeacon = beacons[0];
         //do nothing if there is no beacon signal
         if(!isDefined(closestBeacon)) {
-          return $q.when(undefined);
+          return $q.reject(undefined);
         }
         return UpdateCurrentLocation.update(closestBeacon, Beacons.toKey(closestBeacon.uuid, closestBeacon.major, closestBeacon.minor));
       }
 
+      function exit(locationToExit) {
+        return ExitFromLocations.exit([locationToExit]);
+      }
       return {
-        update: _updateCurrentLocation
+        update: _updateCurrentLocation,
+        exit:exit
       };
 
     });
