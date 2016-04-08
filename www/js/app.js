@@ -83,7 +83,8 @@ angular.module('svBeaconPrototype', [
     'svBeaconPrototype.validations',
     'svBeaconPrototype.location',
     'svBeaconPrototype.googleAnalytics',
-    'firebase'
+    'firebase',
+    'ngDraggable'
   ])
 
   .run(function ($log, $rootScope, $window, Router, Cordovas) {
@@ -173,6 +174,16 @@ angular.module('svBeaconPrototype', [
           'menuContent': {
             templateUrl: 'features/register/register.tpl.html',
             controller: 'RegisterCtrl'
+          }
+        }
+      })
+
+      .state('app.game', {
+        url: '/game',
+        views: {
+          'menuContent': {
+            templateUrl: 'features/dnd-game/dnd-game.tpl.html',
+            controller: 'DndGameCtrl'
           }
         }
       })

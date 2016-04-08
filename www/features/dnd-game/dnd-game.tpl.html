@@ -1,0 +1,53 @@
+<ion-view view-title="My Details">
+  <ion-content scroll="false">
+    <h3 class="padding">Drag cards to a proper bucket!</h3>
+
+    <div class="draggables" ng-drop="true" ng-drop-success="onDropComplete($data,$event, draggables)">
+      <button ng-repeat="name in draggables" ng-drag="true" ng-drag-data="name" data-allow-transform="true"
+              class="drag-ready-effect draggable-item" ng-drag-success="onDragSuccess($data,$event, draggables)">
+        {{name}}
+      </button>
+    </div>
+    <div class="drop-zones">
+      <div ng-drop="true" ng-drop-success="onDropComplete($data,$event, dropped1)">
+        <span class="title">Drop area #1</span>
+
+        <button ng-repeat="obj in dropped1" ng-drag="true" ng-drag-data="obj" data-allow-transform="true"
+                class="drag-ready-effect draggable-item" ng-drag-success="onDragSuccess($data,$event, dropped1)">
+          {{obj}}
+        </button>
+
+      </div>
+
+      <div ng-drop="true" ng-drop-success="onDropComplete($data,$event, dropped2)">
+        <span class="title">Drop area #2</span>
+
+        <button ng-repeat="obj in dropped2" ng-drag="true" ng-drag-data="obj" data-allow-transform="true"
+                class="drag-ready-effect draggable-item" ng-drag-success="onDragSuccess($data,$event, dropped2)">
+          {{obj}}
+        </button>
+
+      </div>
+      <div ng-drop="true" ng-drop-success="onDropComplete($data,$event, dropped3)">
+        <span class="title">Drop area #3</span>
+
+        <button ng-repeat="obj in dropped3" ng-drag="true" ng-drag-data="obj" data-allow-transform="true"
+                class="drag-ready-effect draggable-item" ng-drag-success="onDragSuccess($data,$event, dropped3)">
+          {{obj}}
+        </button>
+
+      </div>
+
+      <div ng-drop="true" ng-drop-success="onDropComplete($data,$event, dropped4)">
+        <span class="title">Drop area #4</span>
+
+        <button ng-repeat="obj in dropped4" ng-drag="true" ng-drag-data="obj" data-allow-transform="true"
+                class="drag-ready-effect draggable-item" ng-drag-success="onDragSuccess($data, $event, dropped4)">
+          {{obj}}
+        </button>
+
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

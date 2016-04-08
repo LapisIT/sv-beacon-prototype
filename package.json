@@ -42,7 +42,8 @@
     "cordova-plugin-app-version@0.1.8",
     "cordova-plugin-network-information@1.2.0",
     "cordova-plugin-screen-orientation@1.4.1",
-    "cordova-plugin-ibeacon@3.4.0"
+    "cordova-plugin-ibeacon@3.4.0",
+    "cordova-plugin-ios-longpress-fix@1.1.0"
   ],
   "cordovaPlatforms": [
     {

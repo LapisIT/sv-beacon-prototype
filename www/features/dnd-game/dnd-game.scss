@@ -1,0 +1,165 @@
+$drop-zone-color: #eaeaea;
+$drop-zone-border: solid 1px #ccc;
+$drop-enter-border: solid 5px red;
+$draggable-item-color: rgba(102, 102, 102, 0.8);
+$drag-over-border: solid 1px red;
+$animation-color: rgba(0, 0, 0, 0.3);
+
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.drop-zones, .draggables {
+  clear: both;
+}
+
+.draggables {
+  width: 100%;
+  min-height: 200px;
+  border-top: solid 1px #ccc;
+  border-bottom: solid 1px #ccc;
+}
+
+.drop-zones {
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+  .draggable-item {
+    font-size: 1em;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+  }
+}
+
+.draggable-item {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background: $draggable-item-color;
+  text-align: center;
+  cursor: move;
+  position: relative;
+  margin: 1em;
+  padding: 0;
+  line-height: 116px;
+  border: none;
+  color: #fff;
+  font-size: 1.4em;
+  transition: color 0.7s;
+  float: left;
+  display: block;
+  width: 120px;
+  height: 120px;
+  border-radius: 500px;
+
+  &:focus {
+    outline: none;
+    color: #3c8ddc;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -35px 0 0 -35px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+  }
+  &.drag-over {
+    border: $drag-over-border;
+  }
+  &.dragging {
+    opacity: 0.5;
+  }
+}
+
+.drop-zones > div{
+    background: $drop-zone-color;
+    min-height: 280px;
+    width: 24%;
+    border: $drop-zone-border;
+    text-align: center;
+    margin: 0 .5%;
+    float: left;
+    display: block;
+    position: relative;
+    &.drag-enter {
+      border: $drop-enter-border;
+    }
+    span.title {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 200px;
+      height: 20px;
+      margin-left: -100px;
+      margin-top: -10px;
+    }
+    div {
+      position: relative;
+      z-index: 2;
+    }
+  }
+
+/* Effect Boris */
+
+.drag-ready-effect::after {
+  background: $animation-color;
+}
+
+.drag-ready-effect:active::after, .drag-ready-effect.dragging::after {
+  animation: anim-effect-boris 0.15s forwards;
+}
+
+@-webkit-keyframes anim-effect-boris {
+  0% {
+    -webkit-transform: scale3d(0.3, 0.3, 1);
+    transform: scale3d(0.3, 0.3, 1);
+  }
+  25%, 50% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: scale3d(1.2, 1.2, 1);
+    transform: scale3d(1.2, 1.2, 1);
+  }
+}
+
+@keyframes anim-effect-boris {
+  0% {
+    -webkit-transform: scale3d(0.3, 0.3, 1);
+    transform: scale3d(0.3, 0.3, 1);
+  }
+  25%, 50% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: scale3d(1.2, 1.2, 1);
+    transform: scale3d(1.2, 1.2, 1);
+  }
+}
+
+//@keyframes anim-effect-boris {
+//  0% {
+//    transform: scale3d(0.3, 0.3, 1);
+//  }
+//  25%, 50% {
+//    opacity: 1;
+//  }
+//  100% {
+//    opacity: 0;
+//    transform: scale3d(1.2, 1.2, 1);
+//  }
+//}

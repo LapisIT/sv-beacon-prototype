@@ -49,6 +49,11 @@ ion-side-menu.menu {
     content: $whereabout-icon;
   }
 
+  .icon.game:before {
+    content: $game-icon;
+    margin-top: 5px;
+  }
+
   ion-item.species > a {
     height: 256px;
     &:before {
