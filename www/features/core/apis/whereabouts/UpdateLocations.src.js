@@ -32,8 +32,8 @@ angular.module('svBeaconPrototype').factory('UpdateLocations',
 
         return ProximityCriteria.consistentSignals(signals, numberOfTimesToDecideCriterion).then(function () {
           location = locations[key];
-          //delete locationsToClean[key];
-          //ExitFromLocations.exit(locationsToClean);
+          delete locationsToClean[key];
+          ExitFromLocations.exit(locationsToClean);
           return $q.when(location);
         }, function () {
           return _clearSignals(locations);
