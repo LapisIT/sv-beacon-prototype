@@ -1,6 +1,6 @@
 {
   "name": "sv-beacon-prototype",
-  "version": "0.1.9",
+  "version": "0.1.12",
   "description": "sv-beacon-prototype: An Ionic project",
   "dependencies": {
     "gulp": "^3.5.6",
@@ -19,9 +19,9 @@
     "prepare-ionic-build": "npm install && bower install && gulp sass",
     "start": "ionic serve -a -c",
     "sass": "gulp sass",
-    "update-version": "node update-version && git add config.xml && git commit -m 'patch version'",
+    "uv": "npm version patch && node update-version.js && npm run commit",
     "commit": "git add . && git commit -m 'patch version'",
-    "uv": "npm run commit && npm version patch && node update-version.js && npm run commit",
+    "cuv": "npm run commit && npm version patch && node update-version.js && npm run commit",
     "build-web": "grunt ",
     "bad": "ionic run android --device",
     "badl": "ionic run android --device --livereload",

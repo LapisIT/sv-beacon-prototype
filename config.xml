@@ -1,7 +1,7 @@
-<?xml version='1.0' encoding='utf-8'?>
-<widget id="au.com.spatialvision.SVBeaconPrototype" version="0.1.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>sv-beacon-prototype</name>
-    <description>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" id="au.com.spatialvision.SVBeaconPrototype" version="0.1.12">
+  <name>sv-beacon-prototype</name>
+  <description>
         An Ionic Framework and Cordova project.
     </description>
     <author email="parham.fazel@spatialvision.com.au" href="http://spatialvision.com.au/">

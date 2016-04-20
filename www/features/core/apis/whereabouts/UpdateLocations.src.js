@@ -46,7 +46,7 @@ angular.module('svBeaconPrototype').factory('UpdateLocations',
 
     function _clearSignals(locations) {
       signals = [];
-      ExitFromLocations.exit(locations);
+      //ExitFromLocations.exit(locations);
       return $q.reject();
     }
 
