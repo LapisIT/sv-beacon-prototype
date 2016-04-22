@@ -69,6 +69,7 @@ console.log('logs init? ', window.sv.logs);
 angular.module('svBeaconPrototype', [
     'ionic',
     'ngCordova',
+    'leaflet-directive',
     'ngStorage',
     'svBeaconPrototype.validations',
     'svBeaconPrototype.router',
@@ -184,6 +185,16 @@ angular.module('svBeaconPrototype', [
           'menuContent': {
             templateUrl: 'features/dnd-game/dnd-game.tpl.html',
             controller: 'DndGameCtrl'
+          }
+        }
+      })
+
+      .state('app.indoor-map', {
+        url: '/indoor-map',
+        views: {
+          'menuContent': {
+            templateUrl: 'features/indoor-map/indoor-map.tpl.html',
+            controller: 'IndoorMapCtrl'
           }
         }
       })

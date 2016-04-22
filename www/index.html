@@ -7,6 +7,9 @@
 
 
     <link href="css/ionic.app.css" rel="stylesheet">
+    <link href="lib/leaflet/dist/leaflet.css" rel="stylesheet">
+    <link href="lib/leaflet.markercluster/dist/MarkerCluster.Default.css" rel="stylesheet">
+    <link href="lib/leaflet.markercluster/dist/MarkerCluster.css" rel="stylesheet">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -20,8 +23,15 @@
     <script src="lib/angularfire/dist/angularfire.js"></script>
     <script src="lib/ngCordova/dist/ng-cordova.js"></script>
     <script src="lib/ngDraggable/ngDraggable.js"></script>
+    <script src="lib/leaflet/dist/leaflet.js"></script>
+    <script src="lib/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
+    <script src="lib/leaflet-plugins/layer/tile/Google.js"></script>
+    <script src="lib/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
+    <script src="lib/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <script src="features/core/location/L.ImageTransform.js"></script>
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places"></script>
 
     <!-- your app's js -->
 
@@ -70,6 +80,7 @@
     <script src="features/core/apis/users/UserHistories.js"></script>
     <script src="features/core/apis/users/UserHistories.js"></script>
     <script src="features/core/apis/FirebaseEntities.js"></script>
+    <script src="features/indoor-map/indoor-map.src.js"></script>
 
     <script src="features/core/apis/Users.js"></script>
     <script src="features/dnd-game/dnd-game.src.js"></script>

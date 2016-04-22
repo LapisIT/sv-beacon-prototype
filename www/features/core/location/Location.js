@@ -50,14 +50,20 @@ angular.module('svBeaconPrototype.location', [])
 
 			Locations.createMarker = function (location) {
 				log('Locations.createMarker', location);
-				var m = angular.copy(markerDefault);
+				var m = angular.copy(markerDefault),
+          div_icon = {
+          type: 'div',
+            iconSize: [20, 20],
+            html: '',
+            popupAnchor:  [0, 0]
+        };
 
 				if (hasLatLng(location)) {
 					m.lat = location.lat;
 					m.lng = location.lng;
+          m.icon = div_icon,
 					m.focus = true;
-					//m.message = "Hey, drag me if you want";
-					m.draggable = true
+					m.draggable = false
 				}
 
 				return m;

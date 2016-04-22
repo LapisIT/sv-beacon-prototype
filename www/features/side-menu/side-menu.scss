@@ -54,6 +54,11 @@ ion-side-menu.menu {
     margin-top: 5px;
   }
 
+  .icon.indoor-map:before {
+    content: $indoor-map;
+    margin-top: 5px;
+  }
+
   ion-item.species > a {
     height: 256px;
     &:before {
