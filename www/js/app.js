@@ -115,6 +115,8 @@ angular.module('svBeaconPrototype', [
       if ($window.screen && $window.screen.lockOrientation) {
         $window.screen.lockOrientation('portrait');
       }
+      
+      
     }
 
     Cordovas.isAppReady().then(function(){

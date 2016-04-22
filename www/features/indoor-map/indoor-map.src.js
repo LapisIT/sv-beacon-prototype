@@ -7,6 +7,33 @@ angular.module('svBeaconPrototype')
 
   .controller('IndoorMapCtrl', function ($scope, $log, $state, $interval, $stateParams, $ionicPopup, MapDefaults, Location, leafletData) {
     $log.info('IndoorMapCtrl...');
+
+    //nw -37.8164063112279	144.956365898252
+    //sw -37.8167426842612	144.956511408091
+    //ne -37.8163030152644	144.956692457199
+    //sw
+
+    var nw = [-37.8164063112279,	144.956365898252];
+    var sw = [-37.8167426842612,	144.956511408091];
+    var ne = [-37.8163030152644,	144.956692457199];
+    var se = [-37.816626, 144.956861];
+    var lat = 0,lng=1;
+    var tiltWidth = sw[lng] - nw[lng];
+    var tiltHeight = Math.abs(nw[lat]) - Math.abs(ne[lat]);
+
+
+    //w: 0.00014550983900107894
+    //h: 0.00033637303329925317
+    // [
+    //   [-37.81635916590862, 144.95643094182014],
+    //   [-37.81626381573271, 144.95675414800644],
+    //   [-37.81660919467391, 144.95691373944283],
+    //   [-37.81670136608138, 144.95659321546555]
+    // ]
+
+
+
+
     var officeBoundaries = [
         [-37.81635916590862, 144.95643094182014],
         [-37.81626381573271, 144.95675414800644],
@@ -15,6 +42,7 @@ angular.module('svBeaconPrototype')
       ],
       center = {lat: -37.81643332707141, lng: 144.95671659708023}, map;
 
+    officeBoundaries = [nw,ne,se,sw];
 
     function _initMap(found) {
       leafletData.getMap().then(function (lmap) {
@@ -36,28 +64,30 @@ angular.module('svBeaconPrototype')
 
     function _moveAround() {
       var points = [
-        [-37.8166335618388, 144.95664484798908],
-        [-37.816625616025036, 144.95665960013866],
-        [-37.816621378257366, 144.956676363945],
-        [-37.81661555132639, 144.9566951394081],
-        [-37.816603367741976, 144.95670653879642],
-        [-37.8165975408096, 144.95671726763248],
-        [-37.816591713876754, 144.95673201978207],
-        [-37.81658588694344, 144.95675012469292],
-        [-37.816581119452216, 144.95676688849926],
-        [-37.81657847084584,144.9567849934101],
-        [-37.816539801181996, 144.95677158236504],
-        [-37.81651384482093, 144.95676085352898],
-        [-37.81649053706037, 144.95675683021545],
-        [-37.81646722929244, 144.95675012469292]
+        [-37.8166335618388, 144.95664484798908]
     ];
       var index = 0;
+      updateMarker({lat: points[index][0], lng: points[index][1]}, $scope);
+
       $interval(function () {
-        if(index === points.length){
-          index = 0;
-        }
-        updateMarker({lat: points[index][0], lng: points[index][1]}, $scope);
-        index++;
+        $log.info('indooratlas', indooratlas);
+        indooratlas.current(
+          '',
+          function(latlng) {
+            $log.info('currentLocation: ', latlng);
+            if(!latlng) {
+              return;
+            }
+
+            var parts = latlng.split(',');
+            updateMarker({lat: Number(parts[0]), lng: Number(parts[1])}, $scope);
+          },
+          function(err) {
+            $log.error('err: ', err);
+          }
+        );
+
+
       }, 1000)
     }
 
