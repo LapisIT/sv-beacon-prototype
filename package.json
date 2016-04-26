@@ -45,7 +45,6 @@
     "cordova-plugin-ibeacon@3.4.0",
     "cordova-plugin-ios-longpress-fix@1.1.0",
     "https://github.com/SpatialVision/sv-plugin-indooratlas.git"
-
   ],
   "cordovaPlatforms": [
     {
