@@ -115,8 +115,8 @@ angular.module('svBeaconPrototype', [
       if ($window.screen && $window.screen.lockOrientation) {
         $window.screen.lockOrientation('portrait');
       }
-      
-      
+
+
     }
 
     Cordovas.isAppReady().then(function(){
@@ -193,6 +193,7 @@ angular.module('svBeaconPrototype', [
 
       .state('app.indoor-map', {
         url: '/indoor-map',
+        cache:false,
         views: {
           'menuContent': {
             templateUrl: 'features/indoor-map/indoor-map.tpl.html',
