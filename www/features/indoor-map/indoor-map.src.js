@@ -11,7 +11,7 @@ angular.module('svBeaconPrototype')
     $log.info('IndoorMapCtrl...');
     var poiFeatures = [];
 
-    //$scope.transform = 'transform: rotate(20.4deg);';
+    $scope.transform = 'transform: rotate(20.4deg);';
 
     function _initMap(found) {
       leafletData.getMap().then(function (lmap) {
@@ -34,16 +34,16 @@ angular.module('svBeaconPrototype')
 
       });
     }
-    function checkWithin(latlng, $scope) {
+    function checkWithin(latlng) {
       latlng = L.latLng(latlng.lat, latlng.lng);
 
+      $scope.entered = '';
       poiFeatures.forEach(function (poiFeature) {
         if(poiFeature.feature.getBounds().contains(latlng)) {
           $log.info('Within ', poiFeature.poi.name);
           $scope.entered = 'You are within ' + poiFeature.poi.name;
-          return;
         }
-        $scope.entered = '';
+
       })
     }
     function initIndoorAtlas() {

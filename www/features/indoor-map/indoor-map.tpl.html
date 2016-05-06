@@ -1,7 +1,8 @@
 <ion-view view-title="Map">
   <ion-content class="map-view" data-tap-disabled="true" style="top: 0px !important;">
-      <clicked ng-bind="clicked" style="position: absolute;z-index: 99999; top:80px;"></clicked>
-      <entered ng-bind="entered" style="position: absolute;z-index: 99999; top:120px;"></entered>
+      <!-- clicked ng-bind="clicked" style="position: absolute;z-index: 99999; top:20px; background-color: #0b3e6f; padding: 20px;margin: 20px;color: #fff"></clicked -->
+    <entered ng-if="entered"
+               ng-bind="entered" style="position: absolute;z-index: 99999; top:20px; background-color: #0b3e6f; padding: 20px;margin: 20px;color: #fff"></entered>
       <!-- map -->
       <map style="{{transform}}">
 
