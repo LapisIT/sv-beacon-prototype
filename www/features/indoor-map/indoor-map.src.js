@@ -10,6 +10,9 @@ angular.module('svBeaconPrototype')
                                          SvOffices) {
     $log.info('IndoorMapCtrl...');
     var poiFeatures = [];
+
+    //$scope.transform = 'transform: rotate(20.4deg);';
+
     function _initMap(found) {
       leafletData.getMap().then(function (lmap) {
         var polyLine = L.polyline(SvOffices.office.boundaries);
