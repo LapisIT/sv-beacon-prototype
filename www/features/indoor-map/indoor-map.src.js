@@ -8,40 +8,16 @@ angular.module('svBeaconPrototype')
   .controller('IndoorMapCtrl', function ($scope, $log, $state, $interval, $stateParams, $ionicPopup, MapDefaults, Location, leafletData) {
     $log.info('IndoorMapCtrl...');
 
-    //nw -37.8164063112279	144.956365898252
-    //sw -37.8167426842612	144.956511408091
-    //ne -37.8163030152644	144.956692457199
-    //sw
-
-    var nw = [-37.8164063112279,	144.956365898252];
-    var sw = [-37.8167426842612,	144.956511408091];
-    var ne = [-37.8163030152644,	144.956692457199];
-    var se = [-37.816626, 144.956861];
-    var lat = 0,lng=1;
-    var tiltWidth = sw[lng] - nw[lng];
-    var tiltHeight = Math.abs(nw[lat]) - Math.abs(ne[lat]);
-
-
-    //w: 0.00014550983900107894
-    //h: 0.00033637303329925317
-    // [
-    //   [-37.81635916590862, 144.95643094182014],
-    //   [-37.81626381573271, 144.95675414800644],
-    //   [-37.81660919467391, 144.95691373944283],
-    //   [-37.81670136608138, 144.95659321546555]
-    // ]
-
-
-
-
-    var officeBoundaries = [
-        [-37.81635916590862, 144.95643094182014],
-        [-37.81626381573271, 144.95675414800644],
-        [-37.81660919467391, 144.95691373944283],
-        [-37.81670136608138, 144.95659321546555]
-      ],
+    // var nw = [-37.8164063112279,	144.956365898252];
+    // var sw = [-37.8167426842612,	144.956511408091];
+    // var ne = [-37.8163030152644,	144.956692457199];
+    // var se = [-37.816626, 144.956861] by Mike
+    var nw = [-37.816412,	144.956350];
+    var sw = [-37.816743,	144.956511408091];
+    var ne = [-37.816305,	144.956690];
+    var se = [-37.816645, 144.956841];
+    var officeBoundaries = [],
       center = {lat: -37.81643332707141, lng: 144.95671659708023}, map;
-
     officeBoundaries = [nw,ne,se,sw];
 
     function _initMap(found) {
@@ -55,7 +31,7 @@ angular.module('svBeaconPrototype')
         transformedImage.addTo(lmap);
 
         lmap.fitBounds(polyLine.getBounds());
-        lmap.zoomIn();
+        //lmap.zoomIn();
 
         _moveAround();
 
@@ -69,8 +45,11 @@ angular.module('svBeaconPrototype')
       var index = 0;
       updateMarker({lat: points[index][0], lng: points[index][1]}, $scope);
 
-      $interval(function () {
+      var stop = $interval(function () {
         $log.info('indooratlas', indooratlas);
+        if(!indooratlas) {
+          return;
+        }
         indooratlas.current(
           '',
           function(latlng) {
@@ -104,10 +83,20 @@ angular.module('svBeaconPrototype')
       return newLocation;
     }
 
+
+    //https://a.tiles.mapbox.com/v3/indooratlas.k4e5o551/13/4097/2723.png
+    var
+      indooratlasmap = {
+        url: "http://{s}.tile.mapbox.com/v3/indooratlas.k4e5o551/{z}/{x}/{y}.png",
+        options: {
+          attribution: 'IndoorAtlas'
+        }
+      }
+    //25
     angular.extend($scope, {
       defaults: {
         scrollWheelZoom: true,
-        maxZoom: 25,
+        maxZoom: 22,
         zoomControl: false
       },
       maxBounds: {
@@ -122,13 +111,17 @@ angular.module('svBeaconPrototype')
 
       },
       maxBoundsViscosity: 1.0,
-      center: Location.createCenter(center),
+      //center: Location.createCenter(center),
       markers: {location: Location.createMarker(center)},
       layers: MapDefaults.defaultLayers,
+      //tiles: indooratlasmap,
       events: {
-        map: {enable: ['click', 'dragend']},
-        markers: {enable: ['click', 'dragend']}
+        map: {enable: ['click']},
+        //markers: {enable: ['click', 'dragend']}
       }
+    });
+    $scope.$on('leafletDirectiveMap.click', function (e, options) {
+      $log.info('click', options.leafletEvent.latlng);
     });
 
     _initMap();
