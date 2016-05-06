@@ -53,7 +53,7 @@ angular.module('svBeaconPrototype.location', [])
 				var m = angular.copy(markerDefault),
           div_icon = {
           type: 'div',
-            iconSize: [20, 20],
+            iconSize: [15, 15],
             html: '',
             popupAnchor:  [0, 0]
         };
