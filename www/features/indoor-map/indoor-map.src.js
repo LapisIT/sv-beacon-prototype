@@ -9,7 +9,7 @@ angular.module('svBeaconPrototype')
                                          MapDefaults, Location, leafletData,
                                          SvOffices) {
     $log.info('IndoorMapCtrl...');
-
+    var poiFeatures = [];
     function _initMap(found) {
       leafletData.getMap().then(function (lmap) {
         var polyLine = L.polyline(SvOffices.office.boundaries);
@@ -23,11 +23,25 @@ angular.module('svBeaconPrototype')
         initIndoorAtlas();
 
         SvOffices.pois.forEach(function (poi) {
-          L.circle(poi.asArray, 3, {}).addTo(lmap);
+          var feature = L.circle(poi.asArray, 3, {});
+          feature.addTo(lmap)
+          poiFeatures.push({feature:feature, poi:poi});
         })
 
 
       });
+    }
+    function checkWithin(latlng, $scope) {
+      latlng = L.latLng(latlng.lat, latlng.lng);
+
+      poiFeatures.forEach(function (poiFeature) {
+        if(poiFeature.feature.getBounds().contains(latlng)) {
+          $log.info('Within ', poiFeature.poi.name);
+          $scope.entered = 'You are within ' + poiFeature.poi.name;
+          return;
+        }
+        $scope.entered = '';
+      })
     }
     function initIndoorAtlas() {
       var stop = $interval(function () {
@@ -41,8 +55,10 @@ angular.module('svBeaconPrototype')
               return;
             }
 
-            var parts = latlng.split(',');
-            updateLocationMarker({lat: Number(parts[0]), lng: Number(parts[1])}, $scope);
+            var parts = latlng.split(','),
+              ll = {lat: Number(parts[0]), lng: Number(parts[1])};
+            updateLocationMarker(ll, $scope);
+            checkWithin(ll, $scope);
           },
           function(err) {
             $log.error('err: ', err);
@@ -51,13 +67,13 @@ angular.module('svBeaconPrototype')
       }, 1000)
     }
 
-    function _moveAround() {
-      var points = [
-        [-37.8166335618388, 144.95664484798908]
-      ];
-      var index = 0;
-      updateLocationMarker({lat: points[index][0], lng: points[index][1]}, $scope);
-    }
+    // function _moveAround() {
+    //   var points = [
+    //     [-37.8166335618388, 144.95664484798908]
+    //   ];
+    //   var index = 0;
+    //   updateLocationMarker({lat: points[index][0], lng: points[index][1]}, $scope);
+    // }
 
     function updateLocationMarker(latlng, $scope) {
       var newLocation = Location.createMarker(latlng);
@@ -84,7 +100,7 @@ angular.module('svBeaconPrototype')
     angular.extend($scope, {
       defaults: {
         scrollWheelZoom: true,
-        maxZoom: 22,
+        maxZoom: 25,
         zoomControl: false
       },
       // maxBounds: {
