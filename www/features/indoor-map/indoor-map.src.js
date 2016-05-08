@@ -31,6 +31,8 @@ angular.module('svBeaconPrototype')
     //   [-37.81670136608138, 144.95659321546555]
     // ]
 
+    //https://api.tiles.mapbox.com/v4/indooratlas.k4e5o551/17/118308/80428.png?access_token=pk.eyJ1IjoiaW5kb29yYXRsYXMiLCJhIjoiYmU1YjNiZmQ4MzNiNDYwMTRiNDEzMDMxOWUwMjk2ZTYifQ.gXOMtDENS3b8i7aJ6qsjSA
+
 
 
 

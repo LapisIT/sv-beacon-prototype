@@ -47,11 +47,7 @@
     "https://github.com/SpatialVision/sv-plugin-indooratlas.git"
   ],
   "cordovaPlatforms": [
-    {
-      "platform": "ios",
-      "version": "4.0.1",
-      "locator": "ios@4.0.1"
-    },
+    "ios",
     {
       "platform": "android",
       "version": "5.0.0",

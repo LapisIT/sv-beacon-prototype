@@ -6,7 +6,7 @@ angular.module('svBeaconPrototype')
 
   .controller('WhereaboutCtrl',
   function ($scope, $rootScope, $ionicModal, $ionicPopup,
-            $timeout, $log, $ionicPlatform, $cordovaBeacon, $q, Validations, Ranges, Beacons, Events, Whereabouts) {
+            $timeout, $log, $ionicPlatform, $cordovaBeacon, $q, Validations, Ranges, Beacons, Events, Whereabouts, UserVisits) {
 
     var brIdentifier = 'whereaboutRegion',
       brNotifyEntryStateOnDisplay = true,
@@ -55,6 +55,8 @@ angular.module('svBeaconPrototype')
 
         Whereabouts.update(svEvent.locations, pluginResult.beacons).then(function (location) {
           $scope.location = lastKnowLoncation = location;
+          $scope.locationMsg = svEvent['location-messages'][svEvent.id+':'+location.major+':'+location.minor];
+          UserVisits.set(location.locationName);
           potentialExitCount = 0;
         }, function (noLocation) {
           $log.info('No location found lastKnowLoncation: ', lastKnowLoncation, ' potentialExitCount: ', potentialExitCount);
