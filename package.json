@@ -26,7 +26,8 @@
     "bad": "ionic run android --device",
     "badl": "ionic run android --device --livereload",
     "rsc": "ionic resources",
-    "fdep": "firebase deploy"
+    "fdep": "firebase deploy",
+    "cpman":"node copy-manifest.js"
   },
   "cordovaPlugins": [
     "cordova-plugin-device@1.1.1",
