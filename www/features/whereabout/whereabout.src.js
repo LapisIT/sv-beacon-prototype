@@ -55,7 +55,9 @@ angular.module('svBeaconPrototype')
 
         Whereabouts.update(svEvent.locations, pluginResult.beacons).then(function (location) {
           $scope.location = lastKnowLoncation = location;
-          $scope.locationMsg = svEvent['location-messages'][svEvent.id+':'+location.major+':'+location.minor];
+
+          //$scope.locationMsg = svEvent['location-messages'][svEvent.id+':'+location.major+':'+location.minor];
+
           UserVisits.set(location.locationName);
           potentialExitCount = 0;
         }, function (noLocation) {

@@ -27,9 +27,37 @@
         <h2 ng-bind="svEvent.name"></h2>
         <p ng-bind="svEvent.dates"></p>
       </div>
+      <div class="item item-body">
+          <div class="row header">
+            <div class="col">Time</div>
+            <div class="col">Lecture</div>
+            <div class="col">Location</div>
+            <div class="col">Direction</div>
+          </div>
+          <div class="row">
+            <div class="col">09:00 AM</div>
+            <div class="col">Current Issues in Accounting</div>
+            <div class="col">80.02.07</div>
+            <div class="col"><img src="img/map-icon.png" style="width: 35px; "></div>
+          </div>
+        <div class="row">
+          <div class="col">01:00 PM</div>
+          <div class="col">Financial Planning</div>
+          <div class="col">80.06.05</div>
+          <div class="col"><img src="img/map-icon.png" style="width: 35px; "></div>
+        </div>
+        <div class="row">
+          <div class="col">04:00 PM</div>
+          <div class="col">Cost Analysis and Applications</div>
+          <div class="col">12.04.19</div>
+          <div class="col"><img src="img/map-icon.png" style="width: 35px; "></div>
+        </div>
+      </div>
 
       <div class="item item-body">
-        <p style="margin-top: 0;" ng-bind="svEvent.summary"></p>
+        <p style="margin-top: 0;">
+
+        </p>
         <p>Website: <a style="margin-top: 0;" ng-href="{{svEvent.website}}" target="_blank">{{svEvent.website}}</a></p>
         <p>Organised by {{svEvent.organiser}}</p>
       </div>
