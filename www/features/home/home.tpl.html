@@ -15,17 +15,18 @@
   </div>
   <ion-content class="padding" style="background-color: rgba(239, 239, 239, 0.4); top:112px;">
     <div>
-      <h4>Welcome to SV Events</h4>
-      Here is the list of events which is happening at Spatial Vision now.
+      <h4>Welcome to RMIT Smart Campus (Location based services)</h4>
+
+      <!-- img src="./features/home/ibeacon.png" style="width: 70px; float: right;" -->
+      <img src="img/rmit-logo.svg" style="width: 120px;">
     </div>
-    <!--<img src="./features/home/ibeacon.png" style="width: 100px;">-->
 
     <div class="list card" ng-show="svEvent">
 
       <div class="item item-avatar">
         <img src="./features/home/avatar.jpeg">
-        <h2 ng-bind="svEvent.name"></h2>
-        <p ng-bind="svEvent.dates"></p>
+        <h2>Mr. Andrew Smith</h2>
+        <p>Your daily schedule on {{svEvent.dates[0]}}</p>
       </div>
       <div class="item item-body">
           <div class="row header">
