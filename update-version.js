@@ -14,7 +14,7 @@ gulp.src("./config.xml")
   }))
   .pipe(gulp.dest("./"));
 
-
+/*
 gulp.src("./AndroidManifest.xml")
   .pipe(xeditor(function(xml) {
     var elem = xml.root();
@@ -23,4 +23,4 @@ gulp.src("./AndroidManifest.xml")
     return xml;
   }))
   .pipe(gulp.dest("./"));
-
+*/
