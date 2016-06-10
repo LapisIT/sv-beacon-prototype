@@ -8,7 +8,7 @@
     "gulp-concat": "^2.2.0",
     "gulp-minify-css": "^0.3.0",
     "gulp-rename": "^1.2.0",
-    "gulp-xml-editor": "^2.2.1"
+    "gulp-xml-editor": "git://github.com/SpatialVision/gulp-xml-editor.git#v2.2.2"
   },
   "devDependencies": {
     "bower": "^1.3.3",
